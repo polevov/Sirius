@@ -183,4 +183,5 @@ DISTFILES += \
     config/scripts/pdbs.js \
     config/scripts/report.js \
     config/scripts/td.js \
-    config/scripts/wwwdb.js
+    config/scripts/wwwdb.js \
+    ../appveyor.yml

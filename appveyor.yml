@@ -1,0 +1,11 @@
+version: 3.0.{build}
+install:
+  - set QTDIR=C:\Qt\5.10.1\mingw53_32
+  - set PATH=%PATH%;%QTDIR%\bin;C:\MinGW\bin
+build_script:
+  - qmake src\Sirius_win.pro
+  - mingw32-make
+deploy:
+- provider: NuGet
+  api_key:
+    secure: GXgh9p83JTgDAz1JdMtPSzmwyd292dxLjk6cOJ14p3Y=
