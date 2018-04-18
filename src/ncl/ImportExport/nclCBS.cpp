@@ -32,7 +32,7 @@ void CnclCBS::Save(CnclNest *Nest,WCHAR *FileName)
     lstrcpy(CBSFile,FileName);
     lstrcpy(&CBSFile[lstrlen(CBSFile)-3],L"cbs");
     CnclFile OutCBS(CBSFile,GENERIC_WRITE,CREATE_ALWAYS);
-    swprintf_s(CBSstr,L"%-8s 1",Nest->Sheet.Name);
+    swprintf(CBSstr,L"%-8s 1",Nest->Sheet.Name);
     OutCBS<<CBSstr<<ENDL;
     long id;
     WCHAR Name[MAX_PATH];
@@ -60,7 +60,7 @@ void CnclCBS::Save(CnclNest *Nest,WCHAR *FileName)
         }
         if(count>0)
         {
-            swprintf_s(CBSstr,L"%-8s %ld",Name,count);
+            swprintf(CBSstr,L"%-8s %ld",Name,count);
             OutCBS<<CBSstr<<ENDL;
         }
     }while(count>0);

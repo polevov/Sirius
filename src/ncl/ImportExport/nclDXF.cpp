@@ -440,7 +440,7 @@ void CnclDXF::ReadText(CnclFile* DXF)
     }
     CnclSpline spline;
     WCHAR Name[1024];
-    swprintf_s(Name,L"TEXT%d",CountDetail());
+    swprintf(Name,L"TEXT%d",CountDetail());
     CnclFont font;
     font.PrintText(&spline,text,x,y,size,angle,scale);
     CnclSpline::SnclSegment *current=spline.First;

@@ -147,7 +147,7 @@ float nclRand()
 WCHAR* DoubleToStr(double num,WCHAR *buf)
 {
     WCHAR buf_t[64];
-    swprintf_s(buf_t,L"%.20g",num);
+    swprintf(buf_t,L"%.20g",num);
     lstrcpy(buf,buf_t);
     return buf;
 
