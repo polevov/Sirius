@@ -22,5 +22,6 @@
         <file>icons/leftdown.png</file>
         <file>icons/empty.png</file>
         <file>icons/close.png</file>
+        <file>icons/icon.ico</file>
     </qresource>
 </RCC>
