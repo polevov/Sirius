@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+    <group name="NCL" description="Параметры NCL">
+        <group name="Common" description="Общие">
+            <property name="SelectAlgorithm" description="Выбор алгоритма" type="int" value="0">
+                <value name="Автоматический выбор" value="0"/>
+                <value name="Фигурный раскрой" value="1"/>
+                <value name="Прямоугольный раскрой" value="2"/>
+                <value name="Все варианты" value="3"/>
+            </property>
+            <group name="Dist" description="Минимальные расстояния">
+                <property name="DistDetToDet" description="Расстояние между деталями" type="double" value="10"/>
+                <property name="DistDetToSheet" description="Расстояние между деталями и краем листа" type="double" value="10"/>
+             </group>
+             <group name="Block" description="Блоки">
+                 <property name="BuildBlock" description="Блоки" type="int" value="0">
+                     <value name="Автоматически" value="0"/>
+                     <value name="Не формировать блоки" value="1"/>
+                     <value name="Формировать блоки" value="2"/>
+                 </property>
+                 <property name="BuildBlockStep" description="Количество шагов для блоков" type="int" value="1000"/>
+             </group>
+             <property name="RectOptimisation" description="Оптимизировать детали по габаритам" type="bool" value="true"/>
+        </group>
+        <group name="SplineNest" description="Фигурный раскрой">
+            <property name="Sorting" description="Сортировка деталей" type="int" value="1">
+                <value name="Без сортировки" value="0"/>
+                <value name="По габаритам" value="1"/>
+                <value name="По площади" value="2"/>
+                <value name="По периметру" value="3"/>
+            </property>
+            <group name="Accuracy" description="Точность">
+                <property name="StepCount" description="Количество шагов при укладки" type="int" value="1000"/>
+                <property name="Rotate" description="Вращение деталей" type="int" value="8"/>
+            </group>
+            <group name="Move" description="Уплотнение">
+                <property name="MoveDirection" description="Прижимать детали к стороне листа" type="int" value="0">
+                    <value name="Левой" value="0"/>
+                    <value name="Нижней" value="1"/>
+                    <value name="Правой" value="2"/>
+                    <value name="Верхней" value="3"/>
+                </property>
+                <property name="MoveOptimisation" description="Оптимизировать по углу детали" type="int" value="0">
+                    <value name="Левому-верхнему" value="0"/>
+                    <value name="Левому-нижнему" value="1"/>
+                    <value name="Правому-верхнему" value="2"/>
+                    <value name="Правому-нижнему" value="3"/>
+                </property>
+            </group>
+            <property name="Mirror" description="Зеркальное отражение деталей" type="bool" value="true"/>
+        </group>
+        <group name="BoxNest" description="Прямоугольный раскрой">
+            <property name="BoxIteration" description="Количество итераций" type="int" value="100000"/>
+            <property name="BoxComplexity" description="Сложность алгоритма" type="int" value="10"/>
+            <property name="BoxRotate" description="Вращение деталей" type="bool" value="true"/>
+            <property name="BoxGilotine" description="Гильотинный раскрой" type="bool" value="false"/>
+        </group>
+    </group>
+</properties>

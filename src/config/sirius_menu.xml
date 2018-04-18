@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu>
+    <item name="Создать новую деталь в PGD" script="pgd.js"/>
+    <item name="Редактировать геометрию детали" script="pgd_edit.js"/>
+    <item name="dxf-импорт(3.0)" script="dxf_import.js"/>
+    <submenu name="Автоматический раскрой">
+        <item name="Алгоритм NCL" script="ncl.js"/>
+    </submenu>
+    <item name="Интерактивный раскрой" script="wsrs.js"/>
+    <item name="Редактировать результат раскроя" script="wsrs_edit.js"/>
+    <item name="Назначить маршрут резки" script="wsrs_cut.js"/>
+    <item name="Маршрутизация" script="rm-launch.js"/>
+    <item name="Рассчет стоимости резки" script="costsharp.js"/>
+    <submenu name="Постпроцессоры">
+        <item name="Laser" script="laser.js"/>
+        <item name="Комета" script="kometa.js"/>
+        <item name="Trum3050" script="trum3050.js"/>
+        <item name="Esab" script="esab.js"/>
+    </submenu>
+    <item name="Редактор УП" script="editp.js"/>
+    <submenu name="Верификаторы">
+        <item name="Верификатор NCMNew" script="ncm30.js"/>
+        <item name="Верификатор NCMOld" script="ncm.js"/>
+    </submenu>
+    <item name="Task database" script="td.js"/>
+    <submenu name="Инструмены">
+        <item name="Стандартные детали" script="wwwdb.js"/>
+    </submenu>
+    <item name="Печать результатов раскроя" script="pdbs.js"/>
+    <item name="Отчет о результатах раскроя (новый)" script="report.js"/>
+</menu>

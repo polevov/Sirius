@@ -1,0 +1,1190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1040</width>
+    <height>660</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Интегрированная САПР СИРИУС</string>
+  </property>
+  <property name="dockNestingEnabled">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QFrame" name="tabPanel">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame{background-color: rgb(80,80,80);}
+QToolButton
+{
+    background-color: rgb(80,80,80);
+	border:none;
+    color:rgb(222,222,222);
+    padding-left:9;
+    padding-right:9;
+    padding-top:3;
+    padding-bottom:3;
+}
+QToolButton:hover
+{
+    background-color: rgb(128,128,128);
+}
+QToolButton:pressed
+{
+    background-color: rgb(50,50,50);
+}
+QToolButton:checked
+{
+    background-color: rgb(50,50,50);
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QToolButton" name="TaskButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Задание</string>
+         </property>
+         <property name="icon">
+          <iconset resource="rc.qrc">
+           <normaloff>:/icons/task.png</normaloff>:/icons/task.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+         <property name="autoExclusive">
+          <bool>true</bool>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="ResultButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Результат
+(0)</string>
+         </property>
+         <property name="icon">
+          <iconset resource="rc.qrc">
+           <normaloff>:/icons/result.png</normaloff>:/icons/result.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>34</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+         <property name="autoExclusive">
+          <bool>true</bool>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="ParamsButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Параметры</string>
+         </property>
+         <property name="icon">
+          <iconset resource="rc.qrc">
+           <normaloff>:/icons/settings.png</normaloff>:/icons/settings.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="autoExclusive">
+          <bool>true</bool>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="MainFrame">
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QTabWidget" name="MainTabWidget">
+         <property name="tabPosition">
+          <enum>QTabWidget::North</enum>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <property name="documentMode">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="TaskTab">
+          <attribute name="title">
+           <string>Задание</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_12">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QFrame" name="MainTaskFrame">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_13">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QSplitter" name="TaskSplitter">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="handleWidth">
+                 <number>0</number>
+                </property>
+                <widget class="QFrame" name="frame">
+                 <property name="frameShape">
+                  <enum>QFrame::NoFrame</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_9" stretch="0,10">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QFrame" name="frame_3">
+                    <property name="styleSheet">
+                     <string notr="true">QFrame
+{
+  background-color: rgb(80,80,80);
+}
+QToolButton
+{
+    background-color: rgb(80,80,80);
+	border:none;
+    color:rgb(222,222,222);
+    padding-left:3;
+    padding-right:3;
+    padding-top:3;
+    padding-bottom:3;
+}
+QToolButton:hover
+{
+    background-color: rgb(128,128,128);
+}
+QToolButton:pressed
+{
+    background-color: rgb(50,50,50)
+}
+QToolButton:checked
+{
+    background-color: rgb(50,50,50)
+}</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::NoFrame</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QHBoxLayout" name="horizontalLayout_4">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <property name="leftMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <widget class="QToolButton" name="task_btn">
+                       <property name="toolTip">
+                        <string>Каталог заданий</string>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                       <property name="icon">
+                        <iconset resource="rc.qrc">
+                         <normaloff>:/icons/tasks.png</normaloff>:/icons/tasks.png</iconset>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>24</width>
+                         <height>24</height>
+                        </size>
+                       </property>
+                       <property name="checkable">
+                        <bool>true</bool>
+                       </property>
+                       <property name="autoExclusive">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QToolButton" name="sheet_btn">
+                       <property name="toolTip">
+                        <string>Каталог листов</string>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                       <property name="icon">
+                        <iconset resource="rc.qrc">
+                         <normaloff>:/icons/sheets.png</normaloff>:/icons/sheets.png</iconset>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>24</width>
+                         <height>24</height>
+                        </size>
+                       </property>
+                       <property name="checkable">
+                        <bool>true</bool>
+                       </property>
+                       <property name="autoExclusive">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QToolButton" name="detail_btn">
+                       <property name="toolTip">
+                        <string>Каталог деталей</string>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                       <property name="icon">
+                        <iconset resource="rc.qrc">
+                         <normaloff>:/icons/details.png</normaloff>:/icons/details.png</iconset>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>24</width>
+                         <height>24</height>
+                        </size>
+                       </property>
+                       <property name="checkable">
+                        <bool>true</bool>
+                       </property>
+                       <property name="autoExclusive">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <spacer name="horizontalSpacer">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>40</width>
+                         <height>20</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QFrame" name="frame_2">
+                    <property name="styleSheet">
+                     <string notr="true">QListView,QTreeView
+{
+border: 1px solid  black;
+padding-top: -1px;
+padding-bottom: -1px;
+padding-left: -1px;
+}</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::NoFrame</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QHBoxLayout" name="horizontalLayout">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <property name="leftMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <widget class="QSplitter" name="FileViewSplitter">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="handleWidth">
+                        <number>0</number>
+                       </property>
+                       <widget class="QTreeView" name="DirsView">
+                        <property name="styleSheet">
+                         <string notr="true"/>
+                        </property>
+                        <property name="frameShape">
+                         <enum>QFrame::NoFrame</enum>
+                        </property>
+                       </widget>
+                       <widget class="QListView" name="FilesView">
+                        <property name="frameShape">
+                         <enum>QFrame::NoFrame</enum>
+                        </property>
+                       </widget>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QFrame" name="TaskFrame">
+                 <layout class="QVBoxLayout" name="verticalLayout_10">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QSplitter" name="ViewSplitter">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="handleWidth">
+                     <number>0</number>
+                    </property>
+                    <widget class="QFrame" name="frame_4">
+                     <property name="frameShape">
+                      <enum>QFrame::NoFrame</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <layout class="QVBoxLayout" name="verticalLayout_11">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QFrame" name="frame_5">
+                        <property name="styleSheet">
+                         <string notr="true">QFrame
+{
+background-color: rgb(80,80,80);
+}
+QToolButton
+{
+    background-color: rgb(80,80,80);
+	border:none;
+    color:rgb(222,222,222);
+    padding-left:3;
+    padding-right:3;
+    padding-top:3;
+    padding-bottom:3;
+}
+QToolButton:hover
+{
+    background-color: rgb(128,128,128);
+}
+QToolButton:pressed
+{
+    background-color: rgb(50,50,50)
+}
+QToolButton:checked
+{
+    background-color: rgb(50,50,50)
+}</string>
+                        </property>
+                        <property name="frameShape">
+                         <enum>QFrame::NoFrame</enum>
+                        </property>
+                        <property name="frameShadow">
+                         <enum>QFrame::Raised</enum>
+                        </property>
+                        <layout class="QHBoxLayout" name="horizontalLayout_5">
+                         <property name="spacing">
+                          <number>0</number>
+                         </property>
+                         <property name="leftMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <widget class="QToolButton" name="AddButton">
+                           <property name="toolTip">
+                            <string>Добавить деталь в задание</string>
+                           </property>
+                           <property name="text">
+                            <string>...</string>
+                           </property>
+                           <property name="icon">
+                            <iconset resource="rc.qrc">
+                             <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+                           </property>
+                           <property name="iconSize">
+                            <size>
+                             <width>24</width>
+                             <height>24</height>
+                            </size>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QToolButton" name="DelButton">
+                           <property name="toolTip">
+                            <string>Удалить деталь из задания</string>
+                           </property>
+                           <property name="text">
+                            <string>...</string>
+                           </property>
+                           <property name="icon">
+                            <iconset resource="rc.qrc">
+                             <normaloff>:/icons/del.png</normaloff>:/icons/del.png</iconset>
+                           </property>
+                           <property name="iconSize">
+                            <size>
+                             <width>24</width>
+                             <height>24</height>
+                            </size>
+                           </property>
+                           <property name="shortcut">
+                            <string>Del</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QToolButton" name="TypeButton">
+                           <property name="toolTip">
+                            <string>Деталь/лист</string>
+                           </property>
+                           <property name="text">
+                            <string>...</string>
+                           </property>
+                           <property name="icon">
+                            <iconset resource="rc.qrc">
+                             <normaloff>:/icons/switch.png</normaloff>:/icons/switch.png</iconset>
+                           </property>
+                           <property name="iconSize">
+                            <size>
+                             <width>24</width>
+                             <height>24</height>
+                            </size>
+                           </property>
+                           <property name="shortcut">
+                            <string>Ctrl+T</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QToolButton" name="UpButton">
+                           <property name="toolTip">
+                            <string>Переместить вверх</string>
+                           </property>
+                           <property name="text">
+                            <string>...</string>
+                           </property>
+                           <property name="icon">
+                            <iconset resource="rc.qrc">
+                             <normaloff>:/icons/up.png</normaloff>:/icons/up.png</iconset>
+                           </property>
+                           <property name="iconSize">
+                            <size>
+                             <width>24</width>
+                             <height>24</height>
+                            </size>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QToolButton" name="DownButton">
+                           <property name="toolTip">
+                            <string>Переместить вниз</string>
+                           </property>
+                           <property name="text">
+                            <string>...</string>
+                           </property>
+                           <property name="icon">
+                            <iconset resource="rc.qrc">
+                             <normaloff>:/icons/down.png</normaloff>:/icons/down.png</iconset>
+                           </property>
+                           <property name="iconSize">
+                            <size>
+                             <width>24</width>
+                             <height>24</height>
+                            </size>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QToolButton" name="PropButton">
+                           <property name="toolTip">
+                            <string>Свойства детали</string>
+                           </property>
+                           <property name="text">
+                            <string>...</string>
+                           </property>
+                           <property name="icon">
+                            <iconset resource="rc.qrc">
+                             <normaloff>:/icons/property.png</normaloff>:/icons/property.png</iconset>
+                           </property>
+                           <property name="iconSize">
+                            <size>
+                             <width>24</width>
+                             <height>24</height>
+                            </size>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <spacer name="horizontalSpacer_2">
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>40</width>
+                             <height>20</height>
+                            </size>
+                           </property>
+                          </spacer>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QTreeWidget" name="Task">
+                        <property name="styleSheet">
+                         <string notr="true">QTreeView:item
+{
+		border-bottom:1px solid lightgray;
+		border-right:1px solid lightgray;
+}
+
+QTreeView:item:selected,
+QTreeView:item:selected:active
+{
+         background-color:rgb(85, 170, 255);
+}
+
+QTreeView:item:hover
+{
+         background-color:transparent;
+}
+</string>
+                        </property>
+                        <property name="frameShape">
+                         <enum>QFrame::NoFrame</enum>
+                        </property>
+                        <property name="editTriggers">
+                         <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
+                        </property>
+                        <property name="selectionMode">
+                         <enum>QAbstractItemView::SingleSelection</enum>
+                        </property>
+                        <property name="selectionBehavior">
+                         <enum>QAbstractItemView::SelectRows</enum>
+                        </property>
+                        <property name="rootIsDecorated">
+                         <bool>false</bool>
+                        </property>
+                        <column>
+                         <property name="text">
+                          <string>Лист/деталь</string>
+                         </property>
+                        </column>
+                        <column>
+                         <property name="text">
+                          <string>Количество</string>
+                         </property>
+                        </column>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                    <widget class="QFrame" name="frame_6">
+                     <property name="styleSheet">
+                      <string notr="true">QStackedWidget
+{
+border: 1px solid  black;
+padding-right: -1px;
+padding-bottom: -1px;
+padding-left: -1px;
+}</string>
+                     </property>
+                     <property name="frameShape">
+                      <enum>QFrame::NoFrame</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <layout class="QVBoxLayout" name="verticalLayout_2">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QStackedWidget" name="ViewTask">
+                        <property name="styleSheet">
+                         <string notr="true"/>
+                        </property>
+                        <property name="currentIndex">
+                         <number>0</number>
+                        </property>
+                        <widget class="QWidget" name="GPageTask"/>
+                        <widget class="QWidget" name="TPageTask"/>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="TaskStatusBarFrame">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QFrame,QLabel
+{
+	background-color: rgb(80,80,80);
+	color:rgb(255,255,255);
+}
+</string>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Sunken</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="ResultTab">
+          <attribute name="title">
+           <string>Результат</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_15">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QFrame" name="MainResultFrame">
+             <property name="styleSheet">
+              <string notr="true">QFrame
+{
+border-top: 1px solid  black;
+}</string>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QSplitter" name="ResultSplitter">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="handleWidth">
+                 <number>0</number>
+                </property>
+                <widget class="QTreeWidget" name="ResultTree">
+                 <property name="styleSheet">
+                  <string notr="true">QListView,QTreeView
+{
+border: 1px solid  black;
+padding-top: -1px;
+padding-bottom: -1px;
+padding-left: -1px;
+}</string>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::NoFrame</enum>
+                 </property>
+                 <property name="alternatingRowColors">
+                  <bool>true</bool>
+                 </property>
+                 <property name="headerHidden">
+                  <bool>true</bool>
+                 </property>
+                 <column>
+                  <property name="text">
+                   <string notr="true">1</string>
+                  </property>
+                 </column>
+                </widget>
+                <widget class="QStackedWidget" name="ViewResult">
+                 <property name="styleSheet">
+                  <string notr="true">QStackedWidget
+{
+padding-top:-2px;
+}</string>
+                 </property>
+                 <widget class="QWidget" name="GPageResult"/>
+                 <widget class="QWidget" name="TPageResult">
+                  <layout class="QVBoxLayout" name="verticalLayout_4">
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QTextEdit" name="TextResult">
+                     <property name="frameShape">
+                      <enum>QFrame::NoFrame</enum>
+                     </property>
+                     <property name="readOnly">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </widget>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="ResultStatusBarFrame">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QFrame,QLabel
+{
+	background-color: rgb(80,80,80);
+	color:rgb(255,255,255);
+}
+</string>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="ParamsTab">
+          <attribute name="title">
+           <string>Параметры</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QToolBox" name="toolBox">
+             <property name="currentIndex">
+              <number>1</number>
+             </property>
+             <widget class="QWidget" name="TaskParamsPage">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>98</width>
+                <height>28</height>
+               </rect>
+              </property>
+              <attribute name="label">
+               <string>Параметры задания</string>
+              </attribute>
+             </widget>
+             <widget class="QWidget" name="OtherParamsPage">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>938</width>
+                <height>546</height>
+               </rect>
+              </property>
+              <attribute name="label">
+               <string>Дополнительные параметры</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_7">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QPlainTextEdit" name="plainTextEdit"/>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1040</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>Файл</string>
+    </property>
+    <addaction name="actionNewTask"/>
+    <addaction name="actionSettings"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuProgs">
+    <property name="title">
+     <string>Программы</string>
+    </property>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuProgs"/>
+  </widget>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Параметры ...</string>
+   </property>
+   <property name="shortcut">
+    <string>F9</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::PreferencesRole</enum>
+   </property>
+  </action>
+  <action name="actionNewTask">
+   <property name="text">
+    <string>Новое задание ...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Выход</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::QuitRole</enum>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="rc.qrc"/>
+ </resources>
+ <connections/>
+</ui>
