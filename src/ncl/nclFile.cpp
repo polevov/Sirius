@@ -54,7 +54,7 @@ CnclFile CnclFile::operator << (double a)
     DoubleToStr(a,buf);
     char buf_c[32];
     size_t size;
-    wcstombs_s(&size,buf_c,sizeof(buf_c),buf,sizeof(buf_c));
+    wcstombs(buf_c,buf,sizeof(buf_c));
     WriteFile(hFile,buf_c,strlen(buf_c),&tmp,NULL);
     return *this;
 }
