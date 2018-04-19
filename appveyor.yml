@@ -6,22 +6,22 @@ build_script:
   - qmake src\Sirius_win.pro
   - mingw32-make
 after_build:
-  - xcopy /y /e /i src\qt.conf Sirius\
-  - xcopy /y /e /i src\config Sirius\config
-  - xcopy /y /e /i %QTDIR%\qml\QtQuick.2\qtquick2plugin.dll Sirius\qml\QtQuick.2\
-  - xcopy /y /e /i %QTDIR%\qml\QtQuick.2\plugins.qmltypes Sirius\qml\QtQuick.2\
-  - xcopy /y /e /i %QTDIR%\qml\QtQuick.2\qmldir Sirius\qml\QtQuick.2\
-  - xcopy /y /e /i %QTDIR%\plugins\styles\qwindowsvistastyle.dll Sirius\plugins\styles\
-  - xcopy /y /e /i %QTDIR%\plugins\platforms\qwindows.dll Sirius\plugins\platforms\
-  - xcopy /y /e /i %QTDIR%\bin\Qt5Core.dll Sirius\
-  - xcopy /y /e /i %QTDIR%\bin\Qt5Quick.dll Sirius\
-  - xcopy /y /e /i %QTDIR%\bin\Qt5Qml.dll Sirius\
-  - xcopy /y /e /i %QTDIR%\bin\Qt5Widgets.dll Sirius\
-  - xcopy /y /e /i %QTDIR%\bin\Qt5Gui.dll Sirius\
-  - xcopy /y /e /i %QTDIR%\bin\Qt5Network.dll Sirius\
-  - xcopy /y /e /i %QTDIR%\bin\libgcc_s_dw2-1.dll Sirius\
-  - xcopy /y /e /i %QTDIR%\bin\libstdc++-6.dll Sirius\
-  - xcopy /y /e /i %QTDIR%\bin\libwinpthread-1.dll Sirius\
+  - xcopy /e /i src\config Sirius\config
+  - xcopy src\qt.conf Sirius\
+  - xcopy %QTDIR%\qml\QtQuick.2\qtquick2plugin.dll Sirius\qml\QtQuick.2\
+  - xcopy %QTDIR%\qml\QtQuick.2\plugins.qmltypes Sirius\qml\QtQuick.2\
+  - xcopy %QTDIR%\qml\QtQuick.2\qmldir Sirius\qml\QtQuick.2\
+  - xcopy %QTDIR%\plugins\styles\qwindowsvistastyle.dll Sirius\plugins\styles\
+  - xcopy %QTDIR%\plugins\platforms\qwindows.dll Sirius\plugins\platforms\
+  - xcopy %QTDIR%\bin\Qt5Core.dll Sirius\
+  - xcopy %QTDIR%\bin\Qt5Quick.dll Sirius\
+  - xcopy %QTDIR%\bin\Qt5Qml.dll Sirius\
+  - xcopy %QTDIR%\bin\Qt5Widgets.dll Sirius\
+  - xcopy %QTDIR%\bin\Qt5Gui.dll Sirius\
+  - xcopy %QTDIR%\bin\Qt5Network.dll Sirius\
+  - xcopy %QTDIR%\bin\libgcc_s_dw2-1.dll Sirius\
+  - xcopy %QTDIR%\bin\libstdc++-6.dll Sirius\
+  - xcopy %QTDIR%\bin\libwinpthread-1.dll Sirius\
   - xcopy %APPVEYOR_BUILD_FOLDER%\release\Sirius.exe Sirius\
   - 7z a Sirius.zip Sirius\ -r
 artifacts:
