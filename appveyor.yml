@@ -1,11 +1,29 @@
 version: 3.0.{build}
-install:
+environment:
   - set QTDIR=C:\Qt\5.10.1\mingw53_32
   - set PATH=%PATH%;%QTDIR%\bin;C:\MinGW\bin
 build_script:
   - qmake src\Sirius_win.pro
   - mingw32-make
-deploy:
-- provider: NuGet
-  api_key:
-    secure: GXgh9p83JTgDAz1JdMtPSzmwyd292dxLjk6cOJ14p3Y=
+after_build:
+  - xcopy /y /e /i src\config Sirius\config
+  - xcopy /y /e /i %QTDIR%\qml\QtQuick.2\qtquick2plugin.dll Sirius\qml\QtQuick.2\
+  - xcopy /y /e /i %QTDIR%\qml\QtQuick.2\plugins.qmltypes Sirius\qml\QtQuick.2\
+  - xcopy /y /e /i %QTDIR%\qml\QtQuick.2\qmldir Sirius\qml\QtQuick.2\
+  - xcopy /y /e /i %QTDIR%\plugins\styles\qwindowsvistastyle.dll Sirius\plugins\styles\
+  - xcopy /y /e /i %QTDIR%\plugins\platforms\qwindows.dll Sirius\plugins\platforms\
+  - xcopy /y /e /i %QTDIR%\bin\Qt5Core.dll Sirius\
+  - xcopy /y /e /i %QTDIR%\bin\Qt5Quick.dll Sirius\
+  - xcopy /y /e /i %QTDIR%\bin\Qt5Qml.dll Sirius\
+  - xcopy /y /e /i %QTDIR%\bin\Qt5Widgets.dll Sirius\
+  - xcopy /y /e /i %QTDIR%\bin\Qt5Gui.dll Sirius\
+  - xcopy /y /e /i %QTDIR%\bin\Qt5Network.dll Sirius\
+  - xcopy /y /e /i %QTDIR%\bin\libgcc_s_dw2-1.dll Sirius\
+  - xcopy /y /e /i %QTDIR%\bin\libstdc++-6.dll Sirius\
+  - xcopy /y /e /i %QTDIR%\bin\libwinpthread-1.dll Sirius\
+  - xcopy %APPVEYOR_BUILD_FOLDER%\release\Sirius.exe Sirius\
+  - 7z a Sirius.zip Sirius\ -r
+artifacts:
+  - path: Sirius.zip
+    name: Sirius
+
