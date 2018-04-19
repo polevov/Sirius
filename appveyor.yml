@@ -6,6 +6,7 @@ build_script:
   - qmake src\Sirius_win.pro
   - mingw32-make
 after_build:
+  - xcopy /y /e /i src\qt.conf Sirius\config
   - xcopy /y /e /i src\config Sirius\config
   - xcopy /y /e /i %QTDIR%\qml\QtQuick.2\qtquick2plugin.dll Sirius\qml\QtQuick.2\
   - xcopy /y /e /i %QTDIR%\qml\QtQuick.2\plugins.qmltypes Sirius\qml\QtQuick.2\
