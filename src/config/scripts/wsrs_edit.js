@@ -1,6 +1,6 @@
 function run()
 {
-    if(job.getCurrentFilePath()==="")
+    if(sirius.getCurrentFilePath()==="")
         return;
-    job.execute('WSRS.exe',',,'+job.getCurrentFilePath(),false); //Запуск программы
+    sirius.execute('WSRS.exe',',,'+sirius.getCurrentFilePath(),false); //Запуск программы
 }

@@ -30,8 +30,8 @@ public:
     void Add(QString FileName,int itemType);
     void Select(int index);
     void Save();
-    QString SaveKOL();
     void Load(QString FileName);
+    QString toJSON();
 private:
 };
 

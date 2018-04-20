@@ -1,35 +1,35 @@
 ﻿.import "common/savetask.js" as Ext
 function run()
 {
-    job.setMessage("Раскрой NCL");
-    if(job.getCurrentTaskName()==="")
+    sirius.setMessage("Раскрой NCL");
+    if(sirius.getCurrentTaskName()==="")
         return;
     //формируем INI файл с настройками NCL
     var nclIni='[Settings]\r\n';
-    nclIni+='Dist='+job.getProperty('DistDetToDet')+'\r\n';
-    nclIni+='S_Dist='+job.getProperty('DistDetToSheet')+'\r\n';
-    nclIni+='Algoritm='+job.getProperty('SelectAlgorithm')+'\r\n';
-    nclIni+='Build block='+job.getProperty('BuildBlock')?"1":"0"+'\r\n';
-    nclIni+='Block step='+job.getProperty('BuildBlockStep')+'\r\n';
-    nclIni+='Align block='+job.getProperty('RectOptimisation')+'\r\n';
+    nclIni+='Dist='+sirius.getProperty('DistDetToDet')+'\r\n';
+    nclIni+='S_Dist='+sirius.getProperty('DistDetToSheet')+'\r\n';
+    nclIni+='Algoritm='+sirius.getProperty('SelectAlgorithm')+'\r\n';
+    nclIni+='Build block='+sirius.getProperty('BuildBlock')?"1":"0"+'\r\n';
+    nclIni+='Block step='+sirius.getProperty('BuildBlockStep')+'\r\n';
+    nclIni+='Align block='+sirius.getProperty('RectOptimisation')+'\r\n';
     nclIni+='[Nest]\r\n';
-    nclIni+='Step='+job.getProperty('StepCount')+'\r\n';
-    nclIni+='Step_angle='+job.getProperty('Rotate')+'\r\n';
-    nclIni+='Mirror='+job.getProperty('Mirror')?"1":"0"+'\r\n';
-    nclIni+='Sort='+job.getProperty('Sorting')+'\r\n';
-    nclIni+='Optimization='+job.getProperty('RectOptimisation')+'\r\n';
-    nclIni+='Move='+job.getProperty('MoveOptimisation')+'\r\n';
-    nclIni+='Box iteration='+job.getProperty('BoxIteration')+'\r\n';
-    nclIni+='Box strong='+job.getProperty('BoxComplexity')+'\r\n';
-    nclIni+='Box rotate='+job.getProperty('BoxRotate')?"1":"0"+'\r\n';
-    nclIni+='Guillotine='+job.getProperty('BoxGilotine')?"1":"0"+'\r\n';
+    nclIni+='Step='+sirius.getProperty('StepCount')+'\r\n';
+    nclIni+='Step_angle='+sirius.getProperty('Rotate')+'\r\n';
+    nclIni+='Mirror='+sirius.getProperty('Mirror')?"1":"0"+'\r\n';
+    nclIni+='Sort='+sirius.getProperty('Sorting')+'\r\n';
+    nclIni+='Optimization='+sirius.getProperty('RectOptimisation')+'\r\n';
+    nclIni+='Move='+sirius.getProperty('MoveOptimisation')+'\r\n';
+    nclIni+='Box iteration='+sirius.getProperty('BoxIteration')+'\r\n';
+    nclIni+='Box strong='+sirius.getProperty('BoxComplexity')+'\r\n';
+    nclIni+='Box rotate='+sirius.getProperty('BoxRotate')?"1":"0"+'\r\n';
+    nclIni+='Guillotine='+sirius.getProperty('BoxGilotine')?"1":"0"+'\r\n';
     //сохраняем INI файл
-    job.saveToFile(job.getPath(0)+'\\utils\\ncl.ini',nclIni);
+    sirius.saveToFile(sirius.getPath(sirius.dirApplication)+'\\utils\\ncl.ini',nclIni);
 
-    var a=Ext.saveKOL(); //Сохраняем заадние в формате KOL. Функция возвращает имя созданного файла.
-    var result=job.execute('ncl.exe',['/c',a],true);
+    var a=Ext.saveKOL(); //Сохраняем задание в формате KOL. Функция возвращает имя созданного файла.
+    var result=sirius.execute('ncl.exe',['/c',a],true);
     if(result) //Запуск программы
     {
-        job.switchToTab(1); //После завершения программы переключиться на вкладку с результатом
+        sirius.switchToTab(sirius.tabResult); //После завершения программы переключиться на вкладку с результатом
     }
 }

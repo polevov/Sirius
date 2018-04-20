@@ -34,7 +34,10 @@ bool ExecuteForm::canClose()
 void ExecuteForm::SetMessage(QString message)
 {
     ui->Message->setText(message);
-    ui->Caption->setText(message);
+    if(ui->Caption->text().isEmpty())
+    {
+        ui->Caption->setText(message);
+    }
 }
 
 #define MESSAGE_HEIGHT  300

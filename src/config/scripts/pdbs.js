@@ -1,6 +1,6 @@
 function run()
 {
-    if(job.getCurrentFilePath()==="")
+    if(sirius.getCurrentFilePath()==="")
         return;
-    job.execute('pdbs.exe',[job.getCurrentFilePath()],false); //Запуск программы
+    sirius.execute('pdbs.exe',[sirius.getCurrentFilePath()],false); //Запуск программы
 }

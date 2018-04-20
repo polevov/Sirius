@@ -6,17 +6,14 @@
 #include <task.h>
 #include <windows.h>
 
-#define PATH_APP        0
-#define PATH_TASK       1
-#define PATH_JOB        2
-#define PATH_DRAWS      3
-
 class scriptExt : public QObject
 {
     Q_OBJECT
 public:
     explicit scriptExt(Task *currentTask, QObject *parent = nullptr);
     void SetCurrentFileName(QString FileName);
+    enum {tabTask,tabResult};
+    enum {dirApplication,dirTask,dirJob,dirDraws};
 
 private:
     QFile file;

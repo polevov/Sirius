@@ -1,5 +1,5 @@
 function run()
 {
-    job.execute('dxfimport.exe','',false);
-    job.switchToTab(0);
+    sirius.execute('dxfimport.exe','',false);
+    sirius.switchToTab(sirius.tabTask);
 }

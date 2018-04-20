@@ -3,6 +3,7 @@
 #include "common.h"
 #include <QDir>
 #include <QFileDialog>
+#include <QMessageBox>
 
 NewTaskDialog::NewTaskDialog(QWidget *parent) :
     QDialog(parent),
@@ -39,13 +40,6 @@ QString NewTaskDialog::TaskDir()
     return ui->task_path->text();
 }
 
-
-void NewTaskDialog::on_buttonBox_accepted()
-{
-    QDir dir;
-    dir.mkpath(QString("%1/%2").arg(ui->task_path->text(),ui->task_name->text()));
-}
-
 void NewTaskDialog::on_TaskButton_clicked()
 {
     QString dir=QFileDialog::getExistingDirectory(this,QString(),ui->task_path->text(),QFileDialog::ShowDirsOnly|QFileDialog::DontResolveSymlinks);
@@ -53,4 +47,31 @@ void NewTaskDialog::on_TaskButton_clicked()
     {
         ui->task_path->setText(QDir::toNativeSeparators(dir));
     }
+}
+
+void NewTaskDialog::on_cancel_btn_clicked()
+{
+    reject();
+}
+
+void NewTaskDialog::on_ok_btn_clicked()
+{
+    if(ui->task_name->text().isEmpty())
+    {
+        QMessageBox::warning(this,"Ошибка","Имя задания не может быть пустым.",QMessageBox::Ok);
+        return;
+    }
+    QString dirName=QString("%1/%2").arg(ui->task_path->text(),ui->task_name->text());
+    QDir dir(dirName);
+    if(dir.exists())
+    {
+        QMessageBox::warning(this,"Ошибка","Ошибка создания задания. Задание с таким именем уже существует.",QMessageBox::Ok);
+        return;
+    }
+    if(!dir.mkpath(dirName))
+    {
+        QMessageBox::warning(this,"Ошибка","Ошибка создания задания. Проверьте правильность указания пути.",QMessageBox::Ok);
+        return;
+    }
+    accept();
 }

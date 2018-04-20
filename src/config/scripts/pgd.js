@@ -1,5 +1,5 @@
 ﻿function run()
 {
-    var result=job.execute('Pgd.exe','',false);
-    job.switchToTab(0);
+    var result=sirius.execute('Pgd.exe','',false);
+    sirius.switchToTab(sirius.tabTask);
 }

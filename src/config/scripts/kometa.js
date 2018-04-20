@@ -1,7 +1,7 @@
 function run()
 {
-    if(job.getCurrentFilePath()==="")
+    if(sirius.getCurrentFilePath()==="")
         return;
-    job.execute('postproc\\kometa.exe',[job.getCurrentFilePath()],true); //Запуск программы
-    job.switchToTab(1); //После завершения программы переключиться на вкладку с заданием
+    sirius.execute('postproc\\kometa.exe',[sirius.getCurrentFilePath()],true); //Запуск программы
+    sirius.switchToTab(sirius.tabResult); //После завершения программы переключиться на вкладку с заданием
 }

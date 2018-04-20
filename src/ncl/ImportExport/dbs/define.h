@@ -29,8 +29,9 @@
 #define TYPE_DETAIL_LONG_NAME    28 //Запись типа 26 содержит название детали (30 символов)
 
 //идентификатор в файле задания на раскрой KOL
-#define ID_SHEET                      0 //идентификатор листа
-#define ID_DETAIL                     1  //идентификатор детали
+//#define ID_SHEET                      0 //идентификатор листа
+//#define ID_DETAIL                     1  //идентификатор детали
+enum DetailType{typeSheet,typeDetail,typeTool};
 
 //погрешность в вычислениях
 #define Epsilon                           0.00001

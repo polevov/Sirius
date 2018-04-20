@@ -37,7 +37,16 @@ void ScriptControl::Execute()
     QQmlEngine js;
  //   js.installExtensions(QJSEngine::ConsoleExtension);
     QJSValue jsExt = js.newQObject(this);
-    js.globalObject().setProperty("job",jsExt);
+    js.globalObject().setProperty("sirius",jsExt);
+    js.evaluate(QString("sirius.dirJob=%1;").arg(scriptExt::dirJob));
+    js.evaluate(QString("sirius.dirApplication=%1;").arg(scriptExt::dirApplication));
+    js.evaluate(QString("sirius.dirTask=%1;").arg(scriptExt::dirTask));
+    js.evaluate(QString("sirius.dirDraws=%1;").arg(scriptExt::dirDraws));
+    js.evaluate(QString("sirius.tabTask=%1;").arg(scriptExt::tabTask));
+    js.evaluate(QString("sirius.tabResult=%1;").arg(scriptExt::tabResult));
+    js.evaluate(QString("sirius.typeDetail=%1;").arg(DetailType::typeDetail));
+    js.evaluate(QString("sirius.typeSheet=%1;").arg(DetailType::typeSheet));
+    js.evaluate(QString("sirius.typeTool=%1;").arg(DetailType::typeTool));
     QQmlComponent com(&js);
     js.setImportPathList(QStringList()<<js.importPathList()<<(QApplication::applicationDirPath()+"/config/scripts"));
     QString source=QString("import QtQuick 2.0\n"

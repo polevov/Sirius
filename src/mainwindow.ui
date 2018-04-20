@@ -376,80 +376,149 @@ QToolButton:checked
                       <number>0</number>
                      </property>
                      <item>
-                      <widget class="QToolButton" name="task_btn">
-                       <property name="toolTip">
-                        <string>Каталог заданий</string>
-                       </property>
-                       <property name="text">
-                        <string>...</string>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="rc.qrc">
-                         <normaloff>:/icons/tasks.png</normaloff>:/icons/tasks.png</iconset>
-                       </property>
-                       <property name="iconSize">
+                      <widget class="QFrame" name="frame_7">
+                       <property name="minimumSize">
                         <size>
-                         <width>24</width>
-                         <height>24</height>
+                         <width>40</width>
+                         <height>0</height>
                         </size>
                        </property>
-                       <property name="checkable">
-                        <bool>true</bool>
+                       <property name="frameShape">
+                        <enum>QFrame::NoFrame</enum>
                        </property>
-                       <property name="autoExclusive">
-                        <bool>true</bool>
+                       <property name="frameShadow">
+                        <enum>QFrame::Raised</enum>
                        </property>
+                       <layout class="QHBoxLayout" name="horizontalLayout_2">
+                        <property name="spacing">
+                         <number>0</number>
+                        </property>
+                        <property name="leftMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>0</number>
+                        </property>
+                        <item>
+                         <widget class="QToolButton" name="task_btn">
+                          <property name="toolTip">
+                           <string>Каталог заданий</string>
+                          </property>
+                          <property name="text">
+                           <string>...</string>
+                          </property>
+                          <property name="icon">
+                           <iconset resource="rc.qrc">
+                            <normaloff>:/icons/tasks.png</normaloff>:/icons/tasks.png</iconset>
+                          </property>
+                          <property name="iconSize">
+                           <size>
+                            <width>24</width>
+                            <height>24</height>
+                           </size>
+                          </property>
+                          <property name="checkable">
+                           <bool>true</bool>
+                          </property>
+                          <property name="autoExclusive">
+                           <bool>true</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QToolButton" name="sheet_btn">
+                          <property name="toolTip">
+                           <string>Каталог листов</string>
+                          </property>
+                          <property name="text">
+                           <string>...</string>
+                          </property>
+                          <property name="icon">
+                           <iconset resource="rc.qrc">
+                            <normaloff>:/icons/sheets.png</normaloff>:/icons/sheets.png</iconset>
+                          </property>
+                          <property name="iconSize">
+                           <size>
+                            <width>24</width>
+                            <height>24</height>
+                           </size>
+                          </property>
+                          <property name="checkable">
+                           <bool>true</bool>
+                          </property>
+                          <property name="autoExclusive">
+                           <bool>true</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QToolButton" name="detail_btn">
+                          <property name="toolTip">
+                           <string>Каталог деталей</string>
+                          </property>
+                          <property name="text">
+                           <string>...</string>
+                          </property>
+                          <property name="icon">
+                           <iconset resource="rc.qrc">
+                            <normaloff>:/icons/details.png</normaloff>:/icons/details.png</iconset>
+                          </property>
+                          <property name="iconSize">
+                           <size>
+                            <width>24</width>
+                            <height>24</height>
+                           </size>
+                          </property>
+                          <property name="checkable">
+                           <bool>true</bool>
+                          </property>
+                          <property name="autoExclusive">
+                           <bool>true</bool>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QToolButton" name="sheet_btn">
-                       <property name="toolTip">
-                        <string>Каталог листов</string>
+                      <spacer name="horizontalSpacer_3">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
                        </property>
-                       <property name="text">
-                        <string>...</string>
+                       <property name="sizeType">
+                        <enum>QSizePolicy::Fixed</enum>
                        </property>
-                       <property name="icon">
-                        <iconset resource="rc.qrc">
-                         <normaloff>:/icons/sheets.png</normaloff>:/icons/sheets.png</iconset>
-                       </property>
-                       <property name="iconSize">
+                       <property name="sizeHint" stdset="0">
                         <size>
-                         <width>24</width>
-                         <height>24</height>
+                         <width>10</width>
+                         <height>20</height>
                         </size>
                        </property>
-                       <property name="checkable">
-                        <bool>true</bool>
-                       </property>
-                       <property name="autoExclusive">
-                        <bool>true</bool>
-                       </property>
-                      </widget>
+                      </spacer>
                      </item>
                      <item>
-                      <widget class="QToolButton" name="detail_btn">
+                      <widget class="QToolButton" name="newTask_btn">
                        <property name="toolTip">
-                        <string>Каталог деталей</string>
+                        <string>Новое задание</string>
                        </property>
                        <property name="text">
                         <string>...</string>
                        </property>
                        <property name="icon">
                         <iconset resource="rc.qrc">
-                         <normaloff>:/icons/details.png</normaloff>:/icons/details.png</iconset>
+                         <normaloff>:/icons/task_new.png</normaloff>:/icons/task_new.png</iconset>
                        </property>
                        <property name="iconSize">
                         <size>
                          <width>24</width>
                          <height>24</height>
                         </size>
-                       </property>
-                       <property name="checkable">
-                        <bool>true</bool>
-                       </property>
-                       <property name="autoExclusive">
-                        <bool>true</bool>
                        </property>
                       </widget>
                      </item>
@@ -1064,8 +1133,8 @@ padding-top:-2px;
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
-                <height>28</height>
+                <width>100</width>
+                <height>30</height>
                </rect>
               </property>
               <attribute name="label">

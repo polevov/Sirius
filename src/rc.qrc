@@ -23,5 +23,6 @@
         <file>icons/empty.png</file>
         <file>icons/close.png</file>
         <file>icons/icon.ico</file>
+        <file>icons/task_new.png</file>
     </qresource>
 </RCC>

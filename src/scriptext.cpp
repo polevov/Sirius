@@ -110,18 +110,19 @@ bool scriptExt::execute(QString FileName, QString Arguments, bool StartHidden)
 
 QString scriptExt::getPath(int path)
 {
+    //qDebug()<<path;
     switch (path)
     {
-    case PATH_APP:
+    case dirApplication:
         return QDir::toNativeSeparators(QCoreApplication::applicationDirPath());
         break;
-    case PATH_JOB:
+    case dirJob:
         return QDir::toNativeSeparators(task->TaskJobDir);
         break;
-    case PATH_TASK:
+    case dirTask:
         return QDir::toNativeSeparators(task->TaskDir);
         break;
-    case PATH_DRAWS:
+    case dirDraws:
         return QDir::toNativeSeparators(task->TaskDrawDir);
         break;
     default:
@@ -162,46 +163,6 @@ QVariant scriptExt::getProperty(QString property)
 
 QString scriptExt::getCurrentTask()
 {
-    QJsonDocument json;
-    QJsonObject json_object;
-    QJsonArray task_arr;
-    foreach (TaskItem item, task->Items)
-    {
-        QJsonObject json_item;
-        for (int i=0;i<item.properties.Items.size();i++)
-        {
-            if(item.properties.Items[i].type=="bool")
-                json_item[item.properties.Items[i].name]=item.properties.Items[i].value.toBool();
-            else if(item.properties.Items[i].type=="double")
-                json_item[item.properties.Items[i].name]=item.properties.Items[i].value.toDouble();
-            else if(item.properties.Items[i].type=="int")
-                json_item[item.properties.Items[i].name]=item.properties.Items[i].value.toInt();
-            else
-                json_item[item.properties.Items[i].name]=item.properties.Items[i].value.toString();
-
-        }
-        json_item["selected"]=item.selected;
-        task_arr.append(json_item);
-    }
-    json_object["task"]=task_arr;
-
-    QJsonObject task_param;
-    TaskParams i;
-    foreach (i, params.Items)
-    {
-        if(i.type=="double")
-            task_param[i.name]=i.value.toDouble();
-        else if(i.type=="int")
-            task_param[i.name]=i.value.toInt();
-        else if(i.type=="bool")
-            task_param[i.name]=i.value.toBool();
-        else
-            task_param[i.name]=i.value.toString();
-    }
-    json_object["parameters"]=task_param;
-
-    json.setObject(json_object);
-    QString str=json.toJson(QJsonDocument::Indented);
-    return str;
+    return task->toJSON();
 }
 

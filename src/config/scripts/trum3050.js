@@ -1,7 +1,7 @@
 function run()
 {
-    if(job.getCurrentFilePath()==="")
+    if(sirius.getCurrentFilePath()==="")
         return;
-    job.execute('postproc\\trum3050.exe',[job.getCurrentFilePath()],true); //Запуск программы
-    job.switchToTab(1); //После завершения программы переключиться на вкладку с заданием
+    sirius.execute('postproc\\trum3050.exe',[sirius.getCurrentFilePath()],true); //Запуск программы
+    sirius.switchToTab(sirius.tabResult); //После завершения программы переключиться на вкладку с заданием
 }

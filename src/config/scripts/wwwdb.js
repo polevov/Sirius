@@ -1,4 +1,4 @@
 function run()
 {
-    job.execute('www\\wwwdb.exe','',false);
+    sirius.execute('www\\wwwdb.exe','',false);
 }

@@ -28,6 +28,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->TaskButton->setChecked(true);
     ui->ParamsButton->setVisible(false);
     taskSB=new StatusBar(ui->TaskStatusBarFrame);
+    connect(ui->newTask_btn,SIGNAL(clicked()),this,SLOT(on_actionNewTask_triggered()));
+
     GViewTask=new GraphicsView(taskSB,this);
     QBoxLayout *sl=new QBoxLayout(QBoxLayout::Down,ui->GPageTask);
     sl->setMargin(0);
@@ -270,7 +272,7 @@ bool MainWindow::AddNewFile(QString FileName)
         if(!NewTask())
             return false;
     }
-    int id_type=ui->sheet_btn->isChecked()?ID_SHEET:ID_DETAIL;
+    int id_type=ui->sheet_btn->isChecked()?DetailType::typeSheet:DetailType::typeDetail;
     currentTask->Add(FileName,id_type);
     AddNewItem(FileName,1,id_type);
     currentTask->Save();
@@ -278,15 +280,15 @@ bool MainWindow::AddNewFile(QString FileName)
     return true;
 }
 
-void MainWindow::AddNewItem(QString FileName,int count,int itemType)
+void MainWindow::AddNewItem(QString FileName, int count, int itemType)
 {
     QFileInfo fi(FileName);
     QTreeWidgetItem *item=new QTreeWidgetItem(QStringList()<<fi.fileName()<<QString::number(count));
     item->setFlags(item->flags() | Qt::ItemIsEditable);
 
-    if(itemType==ID_DETAIL)
+    if(itemType==DetailType::typeDetail)
         item->setIcon(0,QIcon(":/icons/detail.png"));
-    else if(itemType==ID_SHEET)
+    else if(itemType==DetailType::typeSheet)
         item->setIcon(0,QIcon(":/icons/sheet.png"));
     item->setData(0,PARAM_GROUP,false);
     item->setData(1,PARAM_VALUE,count);
@@ -551,12 +553,12 @@ void MainWindow::on_TypeButton_clicked()
         int current_type=currentTask->Items[index].properties["itemType"].value.toInt();
         switch(current_type)
         {
-        case ID_DETAIL:
-            currentTask->Items[index].properties["itemType"].value=ID_SHEET;
+        case DetailType::typeDetail:
+            currentTask->Items[index].properties["itemType"].value=DetailType::typeSheet;
             ui->Task->currentItem()->setIcon(0,QIcon(":/icons/sheet.png"));
             break;
-        case ID_SHEET:
-            currentTask->Items[index].properties["itemType"].value=ID_DETAIL;
+        case DetailType::typeSheet:
+            currentTask->Items[index].properties["itemType"].value=DetailType::typeDetail;
             ui->Task->currentItem()->setIcon(0,QIcon(":/icons/detail.png"));
             break;
         }
@@ -577,6 +579,11 @@ void MainWindow::on_DelButton_clicked()
 
 void MainWindow::on_AddButton_clicked()
 {
+    if(currentTask->TaskName=="")
+    {
+        if(!NewTask())
+            return;
+    }
     QFileDialog dialog(this);
     dialog.setNameFilter("Файлы геометрии (*.dbs *.dxf)");
     dialog.setFileMode(QFileDialog::ExistingFiles);
@@ -676,9 +683,9 @@ void MainWindow::on_PropButton_clicked()
         ui->Task->currentItem()->setText(0,currentTask->Items[index].properties["fileName"].value.toString());
         ui->Task->currentItem()->setText(1,currentTask->Items[index].properties["count"].value.toString());
         int itemType=currentTask->Items[index].properties["itemType"].value.toInt();
-        if(itemType==ID_DETAIL)
+        if(itemType==DetailType::typeDetail)
             ui->Task->currentItem()->setIcon(0,QIcon(":/icons/detail.png"));
-        else if(itemType==ID_SHEET)
+        else if(itemType==DetailType::typeSheet)
             ui->Task->currentItem()->setIcon(0,QIcon(":/icons/sheet.png"));
     }
 }

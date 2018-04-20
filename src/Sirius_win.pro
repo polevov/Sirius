@@ -29,10 +29,10 @@ DEBUG_DESTINATION_PATH=$${OUT_PWD}/debug
 win32
 {
     RC_FILE = $${_PRO_FILE_PWD_}/win.rc
+    QMAKE_POST_LINK = "xcopy /y /e /i $$quote($$shell_path($$clean_path($${SOURCE_PATH}/config))) $$quote($$shell_path($$clean_path($${DEBUG_DESTINATION_PATH}/config)))"
+    QMAKE_POST_LINK += " && xcopy /y /e /i $$quote($$shell_path($$clean_path($${SOURCE_PATH}/config))) $$quote($$shell_path($$clean_path($${RELEASE_DESTINATION_PATH}/config)))"
 }
 
-#QMAKE_POST_LINK = "xcopy /y /e /i $$quote($$shell_path($$clean_path($${SOURCE_PATH}/config))) $$quote($$shell_path($$clean_path($${DEBUG_DESTINATION_PATH}/config)))"
-#QMAKE_POST_LINK += " && xcopy /y /e /i $$quote($$shell_path($$clean_path($${SOURCE_PATH}/config))) $$quote($$shell_path($$clean_path($${RELEASE_DESTINATION_PATH}/config)))"
 
 FORMS += \
     mainwindow.ui \

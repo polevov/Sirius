@@ -1,5 +1,4 @@
 function run()
 {
-    job.execute('costsharp.exe','',false);
-    job.switchToTab(0);
+    sirius.execute('costsharp.exe','',false);
 }

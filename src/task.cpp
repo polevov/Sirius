@@ -4,6 +4,10 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QTextStream>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QDebug>
 
 Task::Task(QObject *parent) : QObject(parent)
 {
@@ -61,23 +65,6 @@ void Task::Save()
     file.close();
 }
 
-QString Task::SaveKOL()
-{
-    if(TaskName.isEmpty())
-        return "";
-    QDir dir;
-    dir.mkpath(TaskJobDir);
-    QString FileName=TaskJobDir+"/"+TaskName+".kol";
-    QFile file(FileName);
-    file.open(QIODevice::WriteOnly);
-    QTextStream ts(&file);
-    foreach (TaskItem ti, Items)
-    {
-        ts<<QDir::toNativeSeparators(TaskDrawDir+"/"+ti.properties["fileName"].value.toString())<<" "<<ti.properties["count"].value.toString()<<" "<<ti.properties["itemType"].value.toString()<<"\r\n";
-    }
-    return QDir::toNativeSeparators(FileName);
-}
-
 void Task::Load(QString FileName)
 {
     Items.clear();
@@ -116,10 +103,10 @@ void Task::Load(QString FileName)
                     {
                         propertys.Items.last().type="int";
                         QMap<QString,QVariant> value_sheet;
-                        value_sheet["Лист"]=ID_SHEET;
+                        value_sheet["Лист"]=DetailType::typeSheet;
                         propertys.Items.last().value_list.append(value_sheet);
                         QMap<QString,QVariant> value_detail;
-                        value_detail["Деталь"]=ID_DETAIL;
+                        value_detail["Деталь"]=DetailType::typeDetail;
                         propertys.Items.last().value_list.append(value_detail);
                     }
                     if(at.name()=="count")
@@ -132,4 +119,50 @@ void Task::Load(QString FileName)
             }
         }
     }
+}
+
+QString Task::toJSON()
+{
+    QJsonDocument json;
+    QJsonObject json_object;
+    QJsonArray task_arr;
+    foreach (TaskItem item, Items)
+    {
+        QJsonObject json_item;
+        for (int i=0;i<item.properties.Items.size();i++)
+        {
+            if(item.properties.Items[i].type=="bool")
+                json_item[item.properties.Items[i].name]=item.properties.Items[i].value.toBool();
+            else if(item.properties.Items[i].type=="double")
+                json_item[item.properties.Items[i].name]=item.properties.Items[i].value.toDouble();
+            else if(item.properties.Items[i].type=="int")
+                json_item[item.properties.Items[i].name]=item.properties.Items[i].value.toInt();
+            else
+                json_item[item.properties.Items[i].name]=item.properties.Items[i].value.toString();
+
+        }
+        json_item["selected"]=item.selected;
+        task_arr.append(json_item);
+    }
+    json_object["task"]=task_arr;
+
+    QJsonObject task_param;
+    TaskParams i;
+    foreach (i, params.Items)
+    {
+        if(i.type=="double")
+            task_param[i.name]=i.value.toDouble();
+        else if(i.type=="int")
+            task_param[i.name]=i.value.toInt();
+        else if(i.type=="bool")
+            task_param[i.name]=i.value.toBool();
+        else
+            task_param[i.name]=i.value.toString();
+    }
+    json_object["parameters"]=task_param;
+
+    json.setObject(json_object);
+    QString str=json.toJson(QJsonDocument::Indented);
+    //qDebug()<<str;
+    return str;
 }

@@ -18,8 +18,11 @@ public:
     QString TaskDir();
 
 private slots:
-    void on_buttonBox_accepted();
     void on_TaskButton_clicked();
+
+    void on_cancel_btn_clicked();
+
+    void on_ok_btn_clicked();
 
 private:
     Ui::NewTaskDialog *ui;

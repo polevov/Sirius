@@ -62,7 +62,7 @@ BOOL CDoc::ReadDetail(int ID,long Count)
 {
     CListInFile *Current=File.First;
     CDetailList *DetailOrSheet;
-    if(ID==ID_SHEET)
+    if(ID==DetailType::typeSheet)
         DetailOrSheet=&Sheet;
     else
         DetailOrSheet=&Detail;
