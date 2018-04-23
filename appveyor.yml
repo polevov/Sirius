@@ -27,4 +27,11 @@ after_build:
 artifacts:
   - path: Sirius.zip
     name: Sirius
-
+    provider: GitHub                         # выкладываем на GitHub Releases
+    description: '$(APPVEYOR_REPO_TAG_NAME)' # tag как имя релиза (на Travis так по умолчанию)
+    auth_token:
+        secure: DhY2ZudBTrMIX7K7UmmBxTu8aGuGK7re6SWsVHegL7902EcJEIwmrpgDtLzVx6jt # токен, зашифрованный на сайте appveyor.ci
+    artifact: Sirius.zip # регулярное выражение, описывающее все артефакты данного релиза
+    force_update: true  # перезаписывать артефакты, если файл с таким именем уже имеется
+    on:
+        appveyor_repo_tag: true # выполнять deploy только для tagged-commit
