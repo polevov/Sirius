@@ -29,8 +29,10 @@ artifacts:
     name: Sirius
 deploy:
     provider: GitHub
-    description: '$(APPVEYOR_BUILD_VERSION)'
+    description: '$(APPVEYOR_REPO_TAG_NAME)'
     auth_token:
         secure: DhY2ZudBTrMIX7K7UmmBxTu8aGuGK7re6SWsVHegL7902EcJEIwmrpgDtLzVx6jt
     artifact: Sirius.zip
     force_update: true
+    on:
+        appveyor_repo_tag: true

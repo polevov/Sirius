@@ -12,7 +12,7 @@ public:
     void SetScript(QString script);
     void TerminateProcess();
 public slots:
-    void Execute();
+    QVariant Execute(QString function="run");
     // void terminate();
 signals:
     void finished();

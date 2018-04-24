@@ -1,3 +1,13 @@
+function check()
+{
+    return sirius.getCurrentFilePath()!=="";
+}
+
+function check()
+{
+    return sirius.getCurrentFilePath()!=="";
+}
+
 function run()
 {
     if(sirius.getCurrentFilePath()==="")

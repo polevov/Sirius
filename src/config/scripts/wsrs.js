@@ -1,4 +1,9 @@
 .import "common/savetask.js" as Ext
+function check()
+{
+    return sirius.getCurrentTaskName()!=="";
+}
+
 function run()
 {
     var a=Ext.saveJOB(); //Сохраняем задание в формате KOL. Функция возвращает имя созданного файла.

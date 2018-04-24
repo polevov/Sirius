@@ -1,4 +1,9 @@
 ﻿.import "common/savetask.js" as Ext
+function check()
+{
+    return sirius.getCurrentTaskName()!=="";
+}
+
 function run()
 {
     sirius.setMessage("Раскрой NCL");
@@ -24,7 +29,7 @@ function run()
     nclIni+='Box rotate='+sirius.getProperty('BoxRotate')?"1":"0"+'\r\n';
     nclIni+='Guillotine='+sirius.getProperty('BoxGilotine')?"1":"0"+'\r\n';
     //сохраняем INI файл
-    sirius.saveToFile(sirius.getPath(sirius.dirApplication)+'\\utils\\ncl.ini',nclIni);
+    sirius.saveToFile(sirius.getPath(sirius.dirApplication)+'\\ncl.ini',nclIni);
 
     var a=Ext.saveKOL(); //Сохраняем задание в формате KOL. Функция возвращает имя созданного файла.
     var result=sirius.execute('ncl.exe',['/c',a],true);

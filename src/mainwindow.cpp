@@ -15,7 +15,6 @@
 #include "statusbar.h"
 #include "taskitemdialog.h"
 
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -95,11 +94,49 @@ MainWindow::MainWindow(QWidget *parent) :
     trayIcon=new QSystemTrayIcon(QIcon(":/icons/main_icon/icon16.png"),this);
     trayIcon->show();
     trayIcon->hide();
+    on_Task_currentItemChanged(nullptr,nullptr);
+    connect(ui->menuBar,SIGNAL(hovered(QAction*)),this,SLOT(ReloadMenu(QAction*)));
 }
+
+
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::ReloadChildMenu(QMenu *menu)
+{
+    foreach (QAction* action, menu->actions())
+    {
+        if(action->isSeparator())
+        {
+            continue;
+        }
+        else if(action->menu())
+        {
+            ReloadChildMenu(action->menu());
+        }
+        else
+        {
+            ProgramAction* pa=static_cast<ProgramAction*>(action);
+            sc=new ScriptControl(pa->script,currentTask,this);
+            if(ui->MainTabWidget->currentWidget()!=ui->ParamsTab)
+                sc->SetCurrentFileName(ui->MainTabWidget->currentWidget()==ui->TaskTab?CurrentFileNameTask:CurrentFileNameResult);
+            QVariant result=sc->Execute("check");
+            if(result.isValid())
+               action->setEnabled(result.toBool());
+            delete sc;
+        }
+    }
+}
+
+void MainWindow::ReloadMenu(QAction* action)
+{
+    if(action->parentWidget()==ui->menuProgs)
+    {
+        ReloadChildMenu(ui->menuProgs);
+    }
 }
 
 void MainWindow::rowChangedSlotDirs(QModelIndex index, QModelIndex)
@@ -389,6 +426,7 @@ void MainWindow::SwitchDir()
     ui->detail_btn->setIcon(QIcon(QPixmap(":/icons/details.png")).pixmap(24,24,ui->detail_btn->isChecked()?QIcon::Normal:QIcon::Disabled));
 }
 
+
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
     QMainWindow::resizeEvent(event);
@@ -628,6 +666,11 @@ void MainWindow::on_Task_currentItemChanged(QTreeWidgetItem *current, QTreeWidge
     }
     else
         currentTask->Select(-1);
+    ui->DelButton->setEnabled(current);
+    ui->UpButton->setEnabled(current);
+    ui->DownButton->setEnabled(current);
+    ui->PropButton->setEnabled(current);
+    ui->TypeButton->setEnabled(current);
 }
 
 void MainWindow::TerminateProcess()

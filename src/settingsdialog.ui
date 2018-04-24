@@ -41,8 +41,92 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Параметры задания</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="leftMargin">
+        <number>6</number>
+       </property>
+       <property name="topMargin">
+        <number>6</number>
+       </property>
+       <property name="rightMargin">
+        <number>6</number>
+       </property>
+       <property name="bottomMargin">
+        <number>6</number>
+       </property>
+       <item>
+        <widget class="QTreeWidget" name="PropertiesList">
+         <property name="styleSheet">
+          <string notr="true">QTreeView
+{
+         alternate-background-color:rgb(225, 225, 225);
+}
+
+QTreeView:item:selected,
+QTreeView:item:selected:active
+{
+         background-color:rgb(85, 170, 255);
+}
+
+QTreeView:item:hover
+{
+         background-color:transparent;
+}
+
+QTreeView::branch
+{
+         border-image: url(:/icons/empty.png);
+}
+
+QTreeView::branch:has-children:!has-siblings:closed,
+QTreeView::branch:closed:has-children:has-siblings 
+{
+         border-image: none;
+         image: url(:/icons/left.png);
+}
+
+QTreeView::branch:open:has-children:!has-siblings,
+ QTreeView::branch:open:has-children:has-siblings 
+{
+         border-image: none;
+         image: url(:/icons/leftdown.png);
+}</string>
+         </property>
+         <property name="editTriggers">
+          <set>QAbstractItemView::AllEditTriggers</set>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <attribute name="headerDefaultSectionSize">
+          <number>300</number>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>Параметр</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Значение</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="tab">
       <attribute name="title">
        <string>Общие</string>
@@ -286,90 +370,6 @@ background-color:rgb(255, 255, 255)
           </size>
          </property>
         </spacer>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_2">
-      <attribute name="title">
-       <string>Параметры задания</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
-       </property>
-       <item>
-        <widget class="QTreeWidget" name="PropertiesList">
-         <property name="styleSheet">
-          <string notr="true">QTreeView
-{
-         alternate-background-color:rgb(225, 225, 225);
-}
-
-QTreeView:item:selected,
-QTreeView:item:selected:active
-{
-         background-color:rgb(85, 170, 255);
-}
-
-QTreeView:item:hover
-{
-         background-color:transparent;
-}
-
-QTreeView::branch
-{
-         border-image: url(:/icons/empty.png);
-}
-
-QTreeView::branch:has-children:!has-siblings:closed,
-QTreeView::branch:closed:has-children:has-siblings 
-{
-         border-image: none;
-         image: url(:/icons/left.png);
-}
-
-QTreeView::branch:open:has-children:!has-siblings,
- QTreeView::branch:open:has-children:has-siblings 
-{
-         border-image: none;
-         image: url(:/icons/leftdown.png);
-}</string>
-         </property>
-         <property name="editTriggers">
-          <set>QAbstractItemView::AllEditTriggers</set>
-         </property>
-         <property name="alternatingRowColors">
-          <bool>true</bool>
-         </property>
-         <property name="selectionMode">
-          <enum>QAbstractItemView::SingleSelection</enum>
-         </property>
-         <property name="selectionBehavior">
-          <enum>QAbstractItemView::SelectRows</enum>
-         </property>
-         <attribute name="headerDefaultSectionSize">
-          <number>300</number>
-         </attribute>
-         <column>
-          <property name="text">
-           <string>Параметр</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Значение</string>
-          </property>
-         </column>
-        </widget>
        </item>
       </layout>
      </widget>

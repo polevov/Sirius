@@ -185,4 +185,5 @@ DISTFILES += \
     config/scripts/td.js \
     config/scripts/wwwdb.js \
     ../appveyor.yml \
-    qt.conf
+    qt.conf \
+    history.txt

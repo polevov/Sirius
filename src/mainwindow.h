@@ -87,6 +87,7 @@ private slots:
     void on_actionExit_triggered();
 
     void script_finish();
+    void ReloadMenu(QAction*action);
 
 private:
     bool eventFilter(QObject *watched, QEvent *event);
@@ -110,6 +111,7 @@ private:
     StatusBar *resultSB;
     StatusBar *taskSB;
     ExecuteForm *ExecuteDlg;
+    void ReloadChildMenu(QMenu *menu);
 protected:
     void resizeEvent(QResizeEvent* event);
  signals:

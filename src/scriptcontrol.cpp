@@ -32,11 +32,12 @@ void myMessage(QtMsgType type, const QMessageLogContext &context, const QString 
     errorList<<msg;
 }
 
-void ScriptControl::Execute()
+QVariant ScriptControl::Execute(QString function)
 {
     QQmlEngine js;
  //   js.installExtensions(QJSEngine::ConsoleExtension);
     QJSValue jsExt = js.newQObject(this);
+    QVariant result;
     js.globalObject().setProperty("sirius",jsExt);
     js.evaluate(QString("sirius.dirJob=%1;").arg(scriptExt::dirJob));
     js.evaluate(QString("sirius.dirApplication=%1;").arg(scriptExt::dirApplication));
@@ -55,9 +56,9 @@ void ScriptControl::Execute()
                            "{ \n"
                            "function runScript()\n"
                                "{\n"
-                                   "return ProgramScriptModule.run();\n"
+                                   "return ProgramScriptModule.%2();\n"
                                "}\n"
-                           "}").arg(_script);
+                           "}").arg(_script,function);
     com.setData(source.toLatin1(),QUrl::fromLocalFile(QApplication::applicationDirPath()+"/config/scripts/"+_script));
     if(com.errors().count()>0)
     {
@@ -71,7 +72,6 @@ void ScriptControl::Execute()
     else
     {
         QObject* ob=com.create();
-        QVariant result;
         errorList.clear();
         qInstallMessageHandler(myMessage);
         QMetaObject::invokeMethod(ob,"runScript",Q_RETURN_ARG(QVariant, result));
@@ -85,6 +85,8 @@ void ScriptControl::Execute()
             }
             emit error(error_str.trimmed());
         }
+        delete ob;
     }
     emit finished();
+    return result;
 }
