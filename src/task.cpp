@@ -7,6 +7,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QDirIterator>
 #include <QDebug>
 
 Task::Task(QObject *parent) : QObject(parent)
@@ -51,8 +52,10 @@ void Task::Save()
     sw.writeStartDocument();
     sw.writeStartElement("task");
     sw.writeAttribute("version","1");
+    QStringList files;
     foreach (TaskItem ti, Items)
     {
+        files<<ti.properties["fileName"].value.toString();
         sw.writeStartElement("detail");
         for (int i=0;i<ti.properties.Items.size();i++)
         {
@@ -63,6 +66,13 @@ void Task::Save()
     sw.writeEndElement();
     sw.writeEndDocument();
     file.close();
+    QDirIterator it(TaskDir+"/draws/",QDir::Files|QDir::NoDotAndDotDot);
+    while(it.hasNext())
+    {
+        it.next();
+        if(files.indexOf(it.fileName())<0)
+            QFile::remove(it.filePath());
+    }
 }
 
 void Task::Load(QString FileName)

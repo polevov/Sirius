@@ -1,9 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QStandardPaths>
 #include <QDebug>
-//#include <QValidator>
-//#include <QPoint>
 #include <QStatusBar>
 #include <newtaskdialog.h>
 #include <settingsdialog.h>
@@ -73,12 +70,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->DirsView->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(rowChangedSlotDirs(QModelIndex,QModelIndex)));
     ui->FilesView->installEventFilter(this);
     ui->Task->installEventFilter(this);
-    restoreGeometry(settings.value("MainWnd/geometry").toByteArray());
-    restoreState(settings.value("MainWnd/windowState").toByteArray());
-    ui->TaskSplitter->restoreState(settings.value("MainWnd/TaskSplitterState").toByteArray());
-    ui->ViewSplitter->restoreState(settings.value("MainWnd/ViewSplitterState").toByteArray());
-    ui->FileViewSplitter->restoreState(settings.value("MainWnd/FileViewSplitterState").toByteArray());
-    ui->ResultSplitter->restoreState(settings.value("MainWnd/ResultSplitterState").toByteArray());
+    restoreGeometry(settings->value("MainWnd/geometry").toByteArray());
+    restoreState(settings->value("MainWnd/windowState").toByteArray());
+    ui->TaskSplitter->restoreState(settings->value("MainWnd/TaskSplitterState").toByteArray());
+    ui->ViewSplitter->restoreState(settings->value("MainWnd/ViewSplitterState").toByteArray());
+    ui->FileViewSplitter->restoreState(settings->value("MainWnd/FileViewSplitterState").toByteArray());
+    ui->ResultSplitter->restoreState(settings->value("MainWnd/ResultSplitterState").toByteArray());
     ui->task_btn->setChecked(true);
     on_task_btn_toggled(true);
     ui->DirsView->expand(ui->DirsView->currentIndex());
@@ -188,17 +185,17 @@ void MainWindow::closeEvent(QCloseEvent *event)
         event->ignore();
         return;
     }
-    settings.setValue("MainWnd/geometry", saveGeometry());
-    settings.setValue("MainWnd/windowState", saveState());
+    settings->setValue("MainWnd/geometry", saveGeometry());
+    settings->setValue("MainWnd/windowState", saveState());
 
-    settings.setValue("MainWnd/TaskSplitter", ui->TaskSplitter>saveGeometry());
-    settings.setValue("MainWnd/TaskSplitterState", ui->TaskSplitter>saveState());
-    settings.setValue("MainWnd/ViewSplitter", ui->ViewSplitter->saveGeometry());
-    settings.setValue("MainWnd/ViewSplitterState", ui->ViewSplitter->saveState());
-    settings.setValue("MainWnd/FileViewSplitter", ui->FileViewSplitter>saveGeometry());
-    settings.setValue("MainWnd/FileViewSplitterState", ui->FileViewSplitter>saveState());
-    settings.setValue("MainWnd/ResultSplitter", ui->ResultSplitter->saveGeometry());
-    settings.setValue("MainWnd/ResultSplitterState", ui->ResultSplitter->saveState());
+    settings->setValue("MainWnd/TaskSplitter", ui->TaskSplitter>saveGeometry());
+    settings->setValue("MainWnd/TaskSplitterState", ui->TaskSplitter>saveState());
+    settings->setValue("MainWnd/ViewSplitter", ui->ViewSplitter->saveGeometry());
+    settings->setValue("MainWnd/ViewSplitterState", ui->ViewSplitter->saveState());
+    settings->setValue("MainWnd/FileViewSplitter", ui->FileViewSplitter>saveGeometry());
+    settings->setValue("MainWnd/FileViewSplitterState", ui->FileViewSplitter>saveState());
+    settings->setValue("MainWnd/ResultSplitter", ui->ResultSplitter->saveGeometry());
+    settings->setValue("MainWnd/ResultSplitterState", ui->ResultSplitter->saveState());
 
     QMainWindow::closeEvent(event);
 }
@@ -224,7 +221,7 @@ void MainWindow::LoadResult()
     QStringList filer;
     filer<<currentTask->TaskName+"_*.dbs";
     filer<<currentTask->TaskName+"_*.dxf";
-    QStringList filers=(settings.value("Settings/text_files").toString()+";"+settings.value("Settings/other_files").toString()).split(";");
+    QStringList filers=(settings->value("Settings/text_files").toString()+";"+settings->value("Settings/other_files").toString()).split(";");
     foreach (QString ext, filers)
     {
         if(!ext.trimmed().isEmpty())
@@ -439,7 +436,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 
 void MainWindow::on_task_btn_toggled(bool)
 {
-    QString path=settings.value("Settings/dir_project").toString();
+    QString path=settings->value("Settings/dir_project").toString();
     QDir dir;
     dir.mkpath(path);
     ui->DirsView->setCurrentIndex(fsm_dirs->index(path));
@@ -449,7 +446,7 @@ void MainWindow::on_task_btn_toggled(bool)
 
 void MainWindow::on_sheet_btn_toggled(bool)
 {
-    QString path=settings.value("Settings/dir_sheet").toString();
+    QString path=settings->value("Settings/dir_sheet").toString();
     QDir dir;
     dir.mkpath(path);
     fsm_files->SetDrawsIcon(QIcon(":/icons/sheet.png"));
@@ -461,7 +458,7 @@ void MainWindow::on_sheet_btn_toggled(bool)
 
 void MainWindow::on_detail_btn_toggled(bool)
 {
-    QString path=settings.value("Settings/dir_detail").toString();
+    QString path=settings->value("Settings/dir_detail").toString();
     QDir dir;
     dir.mkpath(path);
     fsm_files->SetDrawsIcon(QIcon(":/icons/detail.png"));
@@ -510,7 +507,7 @@ void MainWindow::on_ResultTree_currentItemChanged(QTreeWidgetItem *current, QTre
     if(!current)
         return;
     QFileInfo fi(currentTask->TaskJobDir+"/"+current->text(0));
-    QString text_files=settings.value("Settings/text_files").toString().toLower();
+    QString text_files=settings->value("Settings/text_files").toString().toLower();
     if(fi.isFile() && fi.isReadable())
     {
         if(fi.suffix().toUpper()=="DBS" || fi.suffix().toUpper()=="DXF")

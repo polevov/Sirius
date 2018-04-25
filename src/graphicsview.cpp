@@ -82,7 +82,7 @@ void GraphicsView::Load(QString file_name)
     CnclTask::SnclDetail *Current=Task.DetailFirst;
     while(Current)
     {
-        Current->new_EcvBuild(settings.value("DistDetToDet").toDouble()/2);
+        Current->new_EcvBuild(settings->value("DistDetToDet").toDouble()/2);
         Task.Task->NestFirst->Add(Current);
         Current=Current->Next;
     }

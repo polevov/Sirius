@@ -822,7 +822,7 @@ void CnclTask::CnclNestOrder::SnclNestOrder::Restore(long k, long n)
         // пока у a[k] есть дети
         child=2*k;
         //  выбираем большего сына
-        switch(settings.value("Sorting",1).toInt())
+        switch(settings->value("Sorting",1).toInt())
         {
         case 1:	//по габаритам
             if(child<n && (IDs[child]->RealRect.Area()<IDs[child+1]->RealRect.Area() ||
@@ -1380,7 +1380,7 @@ void CnclTask::BuildBlock()
             }
             else
                 break;
-            if(settings.value("BuildBlock",0).toInt()!=1 && Current->Count>0)
+            if(settings->value("BuildBlock",0).toInt()!=1 && Current->Count>0)
             {
                 if(Block->Add(Current))
                 {
@@ -1388,7 +1388,7 @@ void CnclTask::BuildBlock()
                     i++;
                 }
             }
-            if(settings.value("RectOptimisation",false).toBool())
+            if(settings->value("RectOptimisation",false).toBool())
                 Block->RectOptimize();
             do
             {
@@ -1413,7 +1413,7 @@ void CnclTask::BuildBlock()
                         Add(SingleBlock);
                         SingleBlock->Add(CurrentLink->ID);
                         SingleBlock->Last->Double=TRUE; //устанавливаем флаг дублирования блока
-                        if(settings.value("RectOptimisation",false).toBool())
+                        if(settings->value("RectOptimisation",false).toBool())
                             SingleBlock->RectOptimize();
                         CurrentLink=CurrentLink->Next;
                     }
@@ -1764,7 +1764,7 @@ BOOL CnclTask::CnclBlock::TestDetail(CnclTask::CnclBlock::SnclDetLink *Detail)
     CnclRastr Rastr;
 
     EcvMatrixIdentity();
-    CnclRect rect(0,0,settings.value("BuildBlockStep",1000).toInt(),settings.value("BuildBlockStep",1000).toInt());
+    CnclRect rect(0,0,settings->value("BuildBlockStep",1000).toInt(),settings->value("BuildBlockStep",1000).toInt());
     Rastr.Create(rect,
                  &TransformView);
     CnclRect BlockRect=EcvRect(FALSE,NULL);
@@ -1773,8 +1773,8 @@ BOOL CnclTask::CnclBlock::TestDetail(CnclTask::CnclBlock::SnclDetLink *Detail)
                       BlockRect.Bottom-DetailRect.Height(),
                       BlockRect.Top+DetailRect.Height(),
                       BlockRect.Right+DetailRect.Width());
-    double Rastr_scale=TransformView.ZoomAll(settings.value("BuildBlockStep",1000).toInt(),
-                                             settings.value("BuildBlockStep",1000).toInt(),
+    double Rastr_scale=TransformView.ZoomAll(settings->value("BuildBlockStep",1000).toInt(),
+                                             settings->value("BuildBlockStep",1000).toInt(),
                                              rectzoom,FALSE);
 
     CnclRect sheetRect=EcvRect(TRUE,&TransformView);

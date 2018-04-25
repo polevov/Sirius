@@ -5,7 +5,7 @@
 
 void TaskItemDialog::closeEvent(QCloseEvent *event)
 {
-    settings.setValue("TaskItemDialog/geometry", saveGeometry());
+    settings->setValue("TaskItemDialog/geometry", saveGeometry());
     QDialog::closeEvent(event);
 }
 
@@ -18,7 +18,7 @@ TaskItemDialog::TaskItemDialog(PropertyList *properties, QWidget *parent) :
     QWidget::setWindowFlag(Qt::WindowContextHelpButtonHint,false);
     ui->PropertiesList->header()->setStretchLastSection(false);
     ui->PropertiesList->header()->setSectionResizeMode(0,QHeaderView::Stretch);
-    restoreGeometry(settings.value("TaskItemDialog/geometry").toByteArray());
+    restoreGeometry(settings->value("TaskItemDialog/geometry").toByteArray());
     properties->FillThreeWidget(ui->PropertiesList);
 }
 

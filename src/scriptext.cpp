@@ -45,9 +45,9 @@ bool scriptExt::execute(QString FileName, QString Arguments, bool StartHidden)
 {
     QString ProgramFile=QDir::toNativeSeparators(FileName);
     if(!QFile::exists(ProgramFile))
-        ProgramFile=QDir::toNativeSeparators(QCoreApplication::applicationDirPath()+"/utils/"+ProgramFile);
+        ProgramFile=QDir::toNativeSeparators(QCoreApplication::applicationDirPath()+"/utils/"+FileName);
     if(!QFile::exists(ProgramFile))
-        ProgramFile=QDir::toNativeSeparators(QCoreApplication::applicationDirPath()+"/"+ProgramFile);
+        ProgramFile=QDir::toNativeSeparators(QCoreApplication::applicationDirPath()+"/"+FileName);
     if(!QFile::exists(ProgramFile))
     {
         qDebug()<<QString("Файл программы не найден: %1!").arg(FileName);

@@ -9,7 +9,7 @@
 #include <QStandardPaths>
 #include <QDebug>
 
-QSettings settings(QSettings::IniFormat,QSettings::UserScope,"Sirius","sirius");
+QSettings *settings;
 PropertyList params;
 CnclTransformView DrawTransform;
 
@@ -87,13 +87,13 @@ void LoadParams(bool LoadDefault=false)
                 if(!LoadDefault)
                 {
                     if(params.last().type=="bool")
-                        params.last().value=settings.value("Property"+group+name,params.last().value).toBool();
+                        params.last().value=settings->value("Property"+group+name,params.last().value).toBool();
                     if(params.last().type=="int")
-                        params.last().value=settings.value("Property"+group+name,params.last().value).toInt();
+                        params.last().value=settings->value("Property"+group+name,params.last().value).toInt();
                     if(params.last().type=="double")
-                        params.last().value=settings.value("Property"+group+name,params.last().value).toDouble();
+                        params.last().value=settings->value("Property"+group+name,params.last().value).toDouble();
                     if(params.last().type=="string")
-                        params.last().value=settings.value("Property"+group+name,params.last().value).toString();
+                        params.last().value=settings->value("Property"+group+name,params.last().value).toString();
                 }
             }
             if (sr.name() == "value" && !name.isEmpty())
@@ -151,7 +151,8 @@ void LoadParams(bool LoadDefault=false)
 
 int main(int argc, char *argv[])
 {
-    //settings.setDefaultFormat();
+    settings=new QSettings(QSettings::IniFormat,QSettings::UserScope,"Sirius","sirius");
+    //settings->setDefaultFormat();
     SettingsDialog::InitSettings();
     QApplication a(argc, argv);
     QApplication::setStyle("windowsvista");
@@ -171,5 +172,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
     ss.finish(&w);
-    return a.exec();
+    int result=a.exec();
+    delete settings;
+    return result;
 }

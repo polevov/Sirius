@@ -10,7 +10,7 @@ NewTaskDialog::NewTaskDialog(QWidget *parent) :
     ui(new Ui::NewTaskDialog)
 {
     ui->setupUi(this);
-    ui->task_path->setText(settings.value("Settings/dir_project").toString());
+    ui->task_path->setText(settings->value("Settings/dir_project").toString());
     ui->task_name->setText("task");
     int i=0;
     QDir dir;

@@ -16,11 +16,11 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->tabWidget->setCurrentIndex(0);
-    ui->dir_project->setText(settings.value("Settings/dir_project").toString());
-    ui->dir_sheet->setText(settings.value("Settings/dir_sheet").toString());
-    ui->dir_detail->setText(settings.value("Settings/dir_detail").toString());
-    ui->textFiles->setText(settings.value("Settings/text_files","*.cbs;*.trc;*.tld;*.tld").toString());
-    ui->otherFiles->setText(settings.value("Settings/other_files").toString());
+    ui->dir_project->setText(settings->value("Settings/dir_project").toString());
+    ui->dir_sheet->setText(settings->value("Settings/dir_sheet").toString());
+    ui->dir_detail->setText(settings->value("Settings/dir_detail").toString());
+    ui->textFiles->setText(settings->value("Settings/text_files","*.cbs;*.trc;*.tld;*.tld").toString());
+    ui->otherFiles->setText(settings->value("Settings/other_files").toString());
     dir_dlg.setFileMode(QFileDialog::Directory);
     dir_dlg.setOption(QFileDialog::ShowDirsOnly);
     QWidget::setWindowFlag(Qt::WindowContextHelpButtonHint,false);
@@ -57,14 +57,14 @@ QMap<QString, QVariant> SettingsDialog::GetDefaultSettings()
 void SettingsDialog::DefaultSettings()
 {
     QMap<QString, QVariant> default_settings=GetDefaultSettings();
-    settings.setValue("Settings/dir_project",default_settings["Settings/dir_project"]);
-    settings.setValue("Settings/dir_sheet",default_settings["Settings/dir_sheet"]);
-    settings.setValue("Settings/dir_detail",default_settings["Settings/dir_detail"]);
-    settings.setValue("Settings/text_files",default_settings["Settings/text_files"]);
-    settings.setValue("Settings/other_files",default_settings["Settings/other_files"]);
+    settings->setValue("Settings/dir_project",default_settings["Settings/dir_project"]);
+    settings->setValue("Settings/dir_sheet",default_settings["Settings/dir_sheet"]);
+    settings->setValue("Settings/dir_detail",default_settings["Settings/dir_detail"]);
+    settings->setValue("Settings/text_files",default_settings["Settings/text_files"]);
+    settings->setValue("Settings/other_files",default_settings["Settings/other_files"]);
 }
 
-#define INIT_SETTINGS(key,settings,default_settings) settings.setValue(key,settings.value(key,default_settings.value(key)))
+#define INIT_SETTINGS(key,settings,default_settings) settings->setValue(key,settings->value(key,default_settings.value(key)))
 void SettingsDialog::InitSettings()
 {
     QMap<QString,QVariant> default_settings=GetDefaultSettings();
@@ -79,12 +79,12 @@ void SettingsDialog::InitSettings()
 
 void SettingsDialog::on_buttonBox_accepted()
 {
-    settings.setValue("Settings/dir_project",ui->dir_project->text());
-    settings.setValue("Settings/dir_sheet",ui->dir_sheet->text());
-    settings.setValue("Settings/dir_detail",ui->dir_detail->text());
-    settings.setValue("Settings/text_files",ui->textFiles->text());
-    settings.setValue("Settings/other_files",ui->otherFiles->text());
-    params.saveTreeToSettings(ui->PropertiesList,&settings);
+    settings->setValue("Settings/dir_project",ui->dir_project->text());
+    settings->setValue("Settings/dir_sheet",ui->dir_sheet->text());
+    settings->setValue("Settings/dir_detail",ui->dir_detail->text());
+    settings->setValue("Settings/text_files",ui->textFiles->text());
+    settings->setValue("Settings/other_files",ui->otherFiles->text());
+    params.saveTreeToSettings(ui->PropertiesList,settings);
 }
 
 void SettingsDialog::on_TaskButton_clicked()
