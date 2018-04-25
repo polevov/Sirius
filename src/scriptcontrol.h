@@ -8,7 +8,7 @@ class ScriptControl:public scriptExt
 {
     Q_OBJECT
 public:
-    ScriptControl(QString script,Task *currentTask, QObject *parent=nullptr);
+    ScriptControl(QString script, Task *currentTask, QString CurrentFileName, int CurrentTab, QObject *parent=nullptr);
     void SetScript(QString script);
     void TerminateProcess();
 public slots:

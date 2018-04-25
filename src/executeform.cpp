@@ -88,6 +88,7 @@ void ExecuteForm::show()
 {
     resize();
     QWidget::show();
+    ui->Message->clear();
 }
 
 void ExecuteForm::on_TerminateButton_clicked()

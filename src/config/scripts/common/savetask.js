@@ -18,7 +18,7 @@ function saveKOL()
     return fileName;
 }
 
-//Сохраняем заадние в формате sirius.
+//Сохраняем заадние в формате J??.
 //Функция возвращает имя созданного файла.
 function saveJOB()
 {

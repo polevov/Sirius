@@ -8,15 +8,10 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-scriptExt::scriptExt(Task *currentTask, QObject *parent) : QObject(parent)
+scriptExt::scriptExt(Task *currentTask, QString CurrentFileName, int CurrentTab, QObject *parent) : QObject(parent),currentFileName(CurrentFileName),currentTab(CurrentTab)
 {
     task=currentTask;
     hProcess=INVALID_HANDLE_VALUE;
-}
-
-void scriptExt::SetCurrentFileName(QString FileName)
-{
-    CurrentFileName=FileName;
 }
 
 QString scriptExt::saveToFile(QString FileName,QString Content)
@@ -65,8 +60,8 @@ bool scriptExt::execute(QString FileName, QString Arguments, bool StartHidden)
     si.wShowWindow=(StartHidden?SW_HIDE:SW_SHOW);
     PROCESS_INFORMATION pi;
     ZeroMemory(&pi,sizeof(PROCESS_INFORMATION));
-    QStringList DocumentsLocation=QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
-    QString CurrentDir=task->TaskJobDir.isEmpty()?(DocumentsLocation.count()>0?DocumentsLocation[0]:""):task->TaskJobDir;
+    QString DocumentsLocation=GetStandartLocation(QStandardPaths::DocumentsLocation);
+    QString CurrentDir=task->TaskJobDir.isEmpty()?(!DocumentsLocation.isEmpty()?DocumentsLocation:""):task->TaskJobDir;
     if(CreateProcess(0,(TCHAR*)(ProgramFile+" "+Arguments).utf16(),NULL,NULL,FALSE,NORMAL_PRIORITY_CLASS,NULL,(TCHAR*)CurrentDir.utf16(),&si,&pi))
     {
         if(!StartHidden)
@@ -138,7 +133,7 @@ QString scriptExt::getCurrentTaskName()
 
 QString scriptExt::getCurrentFilePath()
 {
-    return QDir::toNativeSeparators(CurrentFileName);
+    return QDir::toNativeSeparators(currentFileName);
 }
 
 QString scriptExt::getFileName(QString fileName)
@@ -164,5 +159,10 @@ QVariant scriptExt::getProperty(QString property)
 QString scriptExt::getCurrentTask()
 {
     return task->toJSON();
+}
+
+int scriptExt::getCurrentTab()
+{
+    return currentTab;
 }
 

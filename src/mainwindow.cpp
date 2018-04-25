@@ -120,14 +120,24 @@ void MainWindow::ReloadChildMenu(QMenu *menu)
         else
         {
             ProgramAction* pa=static_cast<ProgramAction*>(action);
-            sc=new ScriptControl(pa->script,currentTask,this);
-            if(ui->MainTabWidget->currentWidget()!=ui->ParamsTab)
-                sc->SetCurrentFileName(ui->MainTabWidget->currentWidget()==ui->TaskTab?CurrentFileNameTask:CurrentFileNameResult);
+            sc=new ScriptControl(pa->script,currentTask,GetCurrentFileName(),ui->MainTabWidget->currentIndex(),this);
             QVariant result=sc->Execute("check");
             if(result.isValid())
                action->setEnabled(result.toBool());
             delete sc;
         }
+    }
+}
+
+QString MainWindow::GetCurrentFileName()
+{
+    if(ui->MainTabWidget->currentWidget()!=ui->ParamsTab)
+    {
+        return ui->MainTabWidget->currentWidget()==ui->TaskTab?CurrentFileNameTask:CurrentFileNameResult;
+    }
+    else
+    {
+        return "";
     }
 }
 
@@ -258,13 +268,7 @@ void MainWindow::LoadResult()
 
 void MainWindow::LoadMenu()
 {
-    QString menuFile=QApplication::applicationDirPath()+"/config/sirius_menu.xml";
-    QStringList dataPaths=QStandardPaths::standardLocations(QStandardPaths::AppDataLocation);
-    if(dataPaths.size()>0)
-    {
-        if(QFile::exists(dataPaths[0]+"/sirius_menu.xml"))
-            menuFile=dataPaths[0]+"/sirius_menu.xml";
-    }
+    QString menuFile=GetStandartLocation(QStandardPaths::AppLocalDataLocation)+"/config/sirius_menu.xml";
     QFile file(menuFile);
     file.open(QIODevice::ReadOnly);
     QXmlStreamReader sr(&file);
@@ -298,7 +302,7 @@ void MainWindow::LoadMenu()
             }
         }
     }
-
+    ReloadChildMenu(ui->menuProgs);
 }
 
 bool MainWindow::AddNewFile(QString FileName)
@@ -477,7 +481,7 @@ void MainWindow::menu_execute()
     ui->menuBar->setDisabled(true);
     ProgramAction *ac=(ProgramAction*)sender();
     ExecuteDlg->SetMessage(ac->text());
-    sc=new ScriptControl(ac->script,currentTask);
+    sc=new ScriptControl(ac->script,currentTask,GetCurrentFileName(),ui->MainTabWidget->currentIndex());
     sc->moveToThread(thread);
     connect(thread,SIGNAL(started()),sc,SLOT(Execute()));
     //connect(sc,SIGNAL(finished()),thread,SLOT(quit()));
@@ -492,8 +496,6 @@ void MainWindow::menu_execute()
     //connect(sc,SIGNAL(finished()),trayIcon,SLOT(hide()));
     connect(sc,SIGNAL(error(QString)),ExecuteDlg,SLOT(on_error(QString)));
     connect(this,SIGNAL(resize()),ExecuteDlg,SLOT(resize()));
-    if(ui->MainTabWidget->currentWidget()!=ui->ParamsTab)
-        sc->SetCurrentFileName(ui->MainTabWidget->currentWidget()==ui->TaskTab?CurrentFileNameTask:CurrentFileNameResult);
     thread->start();
     ExecuteDlg->show();
 }

@@ -1,4 +1,5 @@
 ﻿.import "common/savetask.js" as Ext
+//проверка доступности пункта меню в текущий момент
 function check()
 {
     return sirius.getCurrentTaskName()!=="";

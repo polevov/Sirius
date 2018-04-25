@@ -9,7 +9,7 @@
 #include <QQmlComponent>
 #include <QDebug>
 
-ScriptControl::ScriptControl(QString script, Task *currentTask, QObject *parent):scriptExt(currentTask,parent),_script(script)
+ScriptControl::ScriptControl(QString script, Task *currentTask, QString CurrentFileName, int CurrentTab, QObject *parent):scriptExt(currentTask,CurrentFileName,CurrentTab,parent),_script(script)
 {
 }
 
@@ -49,7 +49,7 @@ QVariant ScriptControl::Execute(QString function)
     js.evaluate(QString("sirius.typeSheet=%1;").arg(DetailType::typeSheet));
     js.evaluate(QString("sirius.typeTool=%1;").arg(DetailType::typeTool));
     QQmlComponent com(&js);
-    js.setImportPathList(QStringList()<<js.importPathList()<<(QApplication::applicationDirPath()+"/config/scripts"));
+    js.setImportPathList(QStringList()<<js.importPathList()<<(GetStandartLocation(QStandardPaths::AppLocalDataLocation)+"/config/scripts"));
     QString source=QString("import QtQuick 2.0\n"
                            "import \"%1\" as ProgramScriptModule\n\n"
                            "Item \n"
@@ -59,7 +59,7 @@ QVariant ScriptControl::Execute(QString function)
                                    "return ProgramScriptModule.%2();\n"
                                "}\n"
                            "}").arg(_script,function);
-    com.setData(source.toLatin1(),QUrl::fromLocalFile(QApplication::applicationDirPath()+"/config/scripts/"+_script));
+    com.setData(source.toLatin1(),QUrl::fromLocalFile(GetStandartLocation(QStandardPaths::AppLocalDataLocation)+"/config/scripts/"+_script));
     if(com.errors().count()>0)
     {
         QString error_str;

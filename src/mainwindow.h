@@ -112,6 +112,7 @@ private:
     StatusBar *taskSB;
     ExecuteForm *ExecuteDlg;
     void ReloadChildMenu(QMenu *menu);
+    QString GetCurrentFileName();
 protected:
     void resizeEvent(QResizeEvent* event);
  signals:

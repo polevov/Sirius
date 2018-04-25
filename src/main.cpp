@@ -1,29 +1,61 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <QSplashScreen>
-#include <QThread>
 #include "common.h"
 #include <settingsdialog.h>
 #include <QXmlStreamReader>
 #include "propertylist.h"
 #include <ncl/nclTransformView.h>
+#include <QStandardPaths>
 #include <QDebug>
 
 QSettings settings(QSettings::IniFormat,QSettings::UserScope,"Sirius","sirius");
 PropertyList params;
 CnclTransformView DrawTransform;
 
-class I:public QThread
+QString GetStandartLocation(QStandardPaths::StandardLocation location)
 {
-public:
-    static void sleep(unsigned long secs) {QThread::sleep(secs);}
-};
+    QStringList dirs=QStandardPaths::standardLocations(location);
+    if(dirs.count()>0)
+    {
+        return dirs[0];
+    }
+    return QString();
+}
 
+void CopyConfigFiles(QString fromDir)
+{
+    QString AppDataDir=GetStandartLocation(QStandardPaths::AppLocalDataLocation);
+    QString AppDir=fromDir+"/config/";
+    QDirIterator it(AppDir,QDir::NoDotAndDotDot|QDir::Files,QDirIterator::Subdirectories);
+    QDir dir;
+    while(it.hasNext())
+    {
+        it.next();
+        //if(!dir.exists())
+        QString FileName=it.fileName();
+        QString FileDir=it.fileInfo().path().mid(AppDir.length());
+        dir.setPath(AppDataDir+"/config/"+FileDir);
+        if(!dir.exists())
+        {
+            dir.mkpath(dir.path());
+        }
+        QFile::remove(dir.path()+"/"+FileName);
+        QFile::copy(it.filePath(),dir.path()+"/"+FileName);
+    }
+    QDirIterator it_clear(AppDataDir+"/config/",QStringList()<<"*.jsc",QDir::NoDotAndDotDot|QDir::Files,QDirIterator::Subdirectories);
+    while(it_clear.hasNext())
+    {
+        it_clear.next();
+        QFile::remove(it_clear.filePath());
+    }
+}
 
 void LoadParams(bool LoadDefault=false)
 {
+    //Загружаем параметры
     QString name;
-    QFile file(QApplication::applicationDirPath()+"/config/sirius_property.xml");
+    QFile file(GetStandartLocation(QStandardPaths::AppLocalDataLocation)+"/config/sirius_property.xml");
     file.open(QIODevice::ReadOnly);
     QXmlStreamReader sr(&file);
     params.clear();
@@ -110,6 +142,11 @@ void LoadParams(bool LoadDefault=false)
             params[i].value_list.append(value_yes);
         }
     }
+    //копируем файлы настроек меню и скрипты
+    CopyConfigFiles(QApplication::applicationDirPath());
+    QString AppDataDir=GetStandartLocation(QStandardPaths::AppDataLocation);
+    QDir().mkpath(AppDataDir+"/config/");
+    CopyConfigFiles(AppDataDir);
 }
 
 int main(int argc, char *argv[])
@@ -130,9 +167,8 @@ int main(int argc, char *argv[])
     paint.drawPath(pp);
     QSplashScreen ss(pm);
     ss.show();
-    LoadParams();
+    LoadParams(); 
     MainWindow w;
-    I::sleep(1);
     w.show();
     ss.finish(&w);
     return a.exec();

@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QPalette>
 #include <tableitemdelegate.h>
+#include "common.h"
 #include <QDebug>
 
 //#define TAB_INDEX(tab_index) QString((tab_index)*6,' ')
@@ -41,12 +42,12 @@ SettingsDialog::~SettingsDialog()
 QMap<QString, QVariant> SettingsDialog::GetDefaultSettings()
 {
     QMap<QString, QVariant> default_settings;
-    QStringList home_dir=QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-    if(home_dir.count()>0)
+    QString home_dir=GetStandartLocation(QStandardPaths::HomeLocation);
+    if(!home_dir.isEmpty())
     {
-        default_settings["Settings/dir_project"]=QDir::toNativeSeparators(home_dir[0]+"/Sirius/Project");
-        default_settings["Settings/dir_sheet"]=QDir::toNativeSeparators(home_dir[0]+"/Sirius/Sheets");
-        default_settings["Settings/dir_detail"]=QDir::toNativeSeparators(home_dir[0]+"/Sirius/Details");
+        default_settings["Settings/dir_project"]=QDir::toNativeSeparators(home_dir+"/Sirius/Project");
+        default_settings["Settings/dir_sheet"]=QDir::toNativeSeparators(home_dir+"/Sirius/Sheets");
+        default_settings["Settings/dir_detail"]=QDir::toNativeSeparators(home_dir+"/Sirius/Details");
     }
     default_settings["Settings/text_files"]="*.cbs;*.trc;*.tld;*.tld";
     default_settings["Settings/other_files"]="";

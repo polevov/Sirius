@@ -1,11 +1,6 @@
 function check()
 {
-    return sirius.getCurrentFilePath()!=="";
-}
-
-function check()
-{
-    return sirius.getCurrentFilePath()!=="";
+    return sirius.getCurrentFilePath()!=="" && sirius.getCurrentTab()===sirius.tabResult;
 }
 
 function run()
