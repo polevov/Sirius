@@ -27,7 +27,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 win32
 {
     RC_FILE = $${_PRO_FILE_PWD_}/win.rc
-    QMAKE_POST_LINK = "xcopy /y /e /i $$quote($$shell_path($$clean_path($${_PRO_FILE_PWD_}/config))) $$quote($$shell_path($$clean_path($${OUT_PWD}/config)))"
+    QMAKE_POST_LINK = "xcopy /y /e /i $$quote($$shell_path($${_PRO_FILE_PWD_}/config)) $$quote($$shell_path($${OUT_PWD}/config))"
 }
 
 
