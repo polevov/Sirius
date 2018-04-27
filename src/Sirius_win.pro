@@ -3,12 +3,15 @@
 # Project created by QtCreator 2018-01-10T11:49:04
 #
 #-------------------------------------------------
-QT       += core gui
+QT       += core gui sql
+
+CONFIG -=debug_and_release debug_and_release_target
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets qml
 
 TARGET = Sirius
 TEMPLATE = app
+
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -21,16 +24,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCE_PATH=$${_PRO_FILE_PWD_}
-RELEASE_DESTINATION_PATH=$${OUT_PWD}/release
-DEBUG_DESTINATION_PATH=$${OUT_PWD}/debug
-
-
 win32
 {
     RC_FILE = $${_PRO_FILE_PWD_}/win.rc
-#    QMAKE_POST_LINK = "xcopy /y /e /i $$quote($$shell_path($$clean_path($${SOURCE_PATH}/config))) $$quote($$shell_path($$clean_path($${DEBUG_DESTINATION_PATH}/config)))"
-#    QMAKE_POST_LINK += " && xcopy /y /e /i $$quote($$shell_path($$clean_path($${SOURCE_PATH}/config))) $$quote($$shell_path($$clean_path($${RELEASE_DESTINATION_PATH}/config)))"
+    QMAKE_POST_LINK = "xcopy /y /e /i $$quote($$shell_path($$clean_path($${_PRO_FILE_PWD_}/config))) $$quote($$shell_path($$clean_path($${OUT_PWD}/config)))"
 }
 
 

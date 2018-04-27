@@ -12,10 +12,11 @@
 #include "statusbar.h"
 #include "taskitemdialog.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QSplashScreen* SplashScreen, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
     currentTask=new Task(this);
     thread=new QThread;
 
@@ -82,7 +83,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->Task->setItemDelegate(new TableItemDelegate(false,this));
     ui->MainTabWidget->setCurrentWidget(ui->TaskTab);
     on_MainTabWidget_currentChanged(ui->MainTabWidget->currentIndex());
-    LoadMenu();
     LoadResult();
     ui->PropButton->setShortcut(QKeySequence(Qt::Key_E|Qt::CTRL));
     ui->UpButton->setShortcut(QKeySequence(Qt::Key_Up|Qt::CTRL));
@@ -93,6 +93,9 @@ MainWindow::MainWindow(QWidget *parent) :
     trayIcon->hide();
     on_Task_currentItemChanged(nullptr,nullptr);
     connect(ui->menuBar,SIGNAL(hovered(QAction*)),this,SLOT(ReloadMenu(QAction*)));
+    if(SplashScreen)
+        SplashScreen->showMessage("загрузка меню ...",Qt::AlignBottom|Qt::AlignLeft,Qt::white);
+    LoadMenu();
 }
 
 

@@ -35,7 +35,7 @@
    <item>
     <widget class="QFrame" name="frame">
      <property name="styleSheet">
-      <string notr="true">QFrame{background-color: rgb(80,80,80);}
+      <string notr="true">QFrame{background-color: rgb(128,128,128);}
 QTextEdit
 {
     background-color: rgb(255,255,255);
@@ -48,7 +48,7 @@ QLabel
 }
 QToolButton
 {
-    background-color: rgb(80,80,80);
+    background-color: rgb(50,50,50);
 	border: 1px solid black;
     color:rgb(222,222,222);
     padding-left:9;
@@ -59,15 +59,15 @@ QToolButton
 }
 QToolButton:hover
 {
-    background-color: rgb(128,128,128);
+    background-color: rgb(80,80,80);
 }
 QToolButton:pressed
 {
-    background-color: rgb(50,50,50);
+    background-color: rgb(25,25,25);
 }
 QToolButton:checked
 {
-    background-color: rgb(50,50,50);
+    background-color: rgb(25,25,25);
 }</string>
      </property>
      <property name="frameShape">

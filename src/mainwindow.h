@@ -13,6 +13,7 @@
 #include <QThread>
 #include <scriptcontrol.h>
 #include <QSystemTrayIcon>
+#include <QSplashScreen>
 #include <statusbar.h>
 #include <executeform.h>
 
@@ -31,7 +32,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QSplashScreen* SplashScreen=0,  QWidget *parent = 0);
     ~MainWindow();
 
 private slots:

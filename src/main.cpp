@@ -167,9 +167,10 @@ int main(int argc, char *argv[])
     pp.addText(490,100,font,SIRIUS_VERSION);
     paint.drawPath(pp);
     QSplashScreen ss(pm);
+    ss.showMessage("старт программы ...",Qt::AlignBottom|Qt::AlignLeft,Qt::white);
     ss.show();
     LoadParams(); 
-    MainWindow w;
+    MainWindow w(&ss);
     w.show();
     ss.finish(&w);
     int result=a.exec();
