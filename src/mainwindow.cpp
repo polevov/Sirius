@@ -11,6 +11,8 @@
 #include "tableitemdelegate.h"
 #include "statusbar.h"
 #include "taskitemdialog.h"
+#include "ncl/ImportExport/nclDBS.h"
+extern CnclTransformView DrawTransform;
 
 MainWindow::MainWindow(QSplashScreen* SplashScreen, QWidget *parent) :
     QMainWindow(parent),
@@ -661,13 +663,99 @@ void MainWindow::on_Task_currentItemChanged(QTreeWidgetItem *current, QTreeWidge
 {
     if(current)
     {
-        GViewTask->Load(currentTask->TaskDrawDir+"/"+ui->Task->currentItem()->text(0));
-        CurrentFileNameTask=currentTask->TaskDrawDir+"/"+ui->Task->currentItem()->text(0);
-        int row=ui->Task->indexOfTopLevelItem(current);
-        currentTask->Select(row);
+        int index=ui->Task->indexOfTopLevelItem(current);
+        bool needNest=false;
+        int detail_index=(currentTask->Items[index].properties["itemType"].value==DetailType::typeDetail?index:-1);
+        if(detail_index>=0)
+        {
+            while(index>0)
+            {
+                index--;
+                if(currentTask->Items[index].properties["itemType"].value==DetailType::typeSheet)
+                {
+                    needNest=true;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            needNest=currentTask->Items[index].properties["itemType"].value==DetailType::typeSheet;
+        }
+        QString fileName=currentTask->TaskDrawDir+"/"+ui->Task->currentItem()->text(0);
+        if(needNest)
+        {
+
+            CnclTask nclTask;
+            nclTask.Task=new CnclTask::CnclNestedTask;
+            nclTask.Task->Add();
+
+            QString fileName=currentTask->TaskDrawDir+"/"+currentTask->Items[index].properties["fileName"].value.toString();
+            WCHAR buf[1024];
+            lstrcpy(buf,(WCHAR*)fileName.utf16());
+            CnclDBS DBS;
+            DBS.Read(buf);
+            nclTask.LoadGeom(&DBS,&DrawTransform,currentTask->Items[index].properties["count"].value.toInt(),currentTask->Items[index].properties["itemType"].value.toInt(),0);
+            if(nclTask.SheetFirst)
+                nclTask.Task->NestFirst->SetSheet(nclTask.SheetFirst);
+            int count=currentTask->Items.size();
+            index++;
+            while(index<count && currentTask->Items[index].properties["itemType"].value==DetailType::typeDetail)
+            {
+                if(index==detail_index || detail_index==-1)
+                {
+                    QString fileName=currentTask->TaskDrawDir+"/"+currentTask->Items[index].properties["fileName"].value.toString();
+                    lstrcpy(buf,(WCHAR*)fileName.utf16());
+                    DBS.Read(buf);
+                    nclTask.LoadGeom(&DBS,&DrawTransform,currentTask->Items[index].properties["count"].value.toInt(),currentTask->Items[index].properties["itemType"].value.toInt(),0);
+                }
+                index++;
+            }
+            CnclRect rect=nclTask.SheetFirst->Rect(FALSE,&DrawTransform);
+            double x=rect.Left;
+            double y=rect.Bottom;
+            double height=0;
+            CnclTask::SnclDetail *DetailCurrent=nclTask.DetailFirst;
+            while(DetailCurrent)
+            {
+                DetailCurrent->Matrix.Identity();
+                DetailCurrent->Recalc();
+                CnclRect rectDetail=DetailCurrent->Rect(FALSE,&DrawTransform);
+                for(int i=0;i<DetailCurrent->Count;i++)
+                {
+                    CnclDetail *newDetail=(CnclDetail*)DetailCurrent;
+                    newDetail->Matrix.Identity();
+                    if((x+rectDetail.Width())>rect.Right)
+                    {
+                        x=rect.Left;
+                        y+=height;
+                        height=0;
+                    }
+                    newDetail->Matrix.Move(x-rectDetail.Left,y-rectDetail.Bottom);
+                    x+=rectDetail.Width();
+                    newDetail->Recalc();
+                    nclTask.Task->NestFirst->Add(newDetail);
+                    if(height<rectDetail.Height())
+                        height=rectDetail.Height();
+                }
+                DetailCurrent=DetailCurrent->Next;
+            }
+
+            GViewTask->clear();
+            GViewTask->DrawNest(nclTask.Task->NestFirst,fileName,nclTask.Task->NestFactor);
+        }
+        else
+        {
+            GViewTask->Load(fileName);
+        }
+        CurrentFileNameTask=fileName;
+        currentTask->Select(index);
     }
     else
+    {
         currentTask->Select(-1);
+        GViewTask->clear();
+    }
     ui->DelButton->setEnabled(current);
     ui->UpButton->setEnabled(current);
     ui->DownButton->setEnabled(current);
@@ -700,6 +788,7 @@ void MainWindow::on_Task_itemChanged(QTreeWidgetItem *item, int column)
         break;
     }
     currentTask->Save();
+    on_Task_currentItemChanged(item,0);
 }
 
 void MainWindow::on_Task_itemDoubleClicked(QTreeWidgetItem *item, int column)

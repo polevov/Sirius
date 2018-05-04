@@ -4,8 +4,6 @@
 #include "detailgraphicsitem.h"
 #include "math.h"
 #include <QDir>
-#include "ncl/nclTask.h"
-#include "ncl/define.h"
 #include <QDebug>
 extern CnclTransformView DrawTransform;
 
@@ -42,7 +40,7 @@ void GraphicsView::DrawDetail(CnclDetail *CurrentDet, QPen pen, QBrush brush, QP
             }
             else
             {
-                CnclPoint Center=CurrentSegment->CenterArc(FALSE,TRUE,&DrawTransform);
+                CnclPoint Center=CurrentSegment->CenterArc(FALSE,FALSE,&DrawTransform);
                 double radius=CurrentSegment->RadiusArc(Center,FALSE,&DrawTransform);
                 double begin_angl=CurrentSegment->BeginAngl(Center)/PI*180;
                 double angl=CurrentSegment->Angl(Center)/PI*180;
@@ -93,7 +91,31 @@ void GraphicsView::Load(QString file_name)
     Task.ChooseNest();
     if(!Task.TaskBest || Task.TaskBest->NestFirst->Count()==0)
         return;
+    Task.TaskBest->Calc();
+    DrawNest(Task.TaskBest->NestFirst,file_name,Task.TaskBest->NestFactor);
+}
 
+void GraphicsView::clear()
+{
+    scene->clear();
+    sb->Clear();
+}
+
+void GraphicsView::resizeEvent(QResizeEvent *event)
+{
+    QRectF BoundingRect=scene->itemsBoundingRect();
+    scene->setSceneRect(BoundingRect);
+    fitInView(BoundingRect, Qt::KeepAspectRatio);
+    QGraphicsView::resizeEvent(event);
+}
+
+void GraphicsView::DrawNest(CnclTask::CnclNestedTask::SnclNest *Nest,QString file_name,double nest_factor)
+{
+    if(!Nest)
+    {
+        clear();
+        return;
+    }
     QPen pen;
     QBrush brush;
     QBrush sheet_brush;
@@ -110,7 +132,7 @@ void GraphicsView::Load(QString file_name)
     CnclRect rect;
     double square=0;
     double perimeter=0;
-    CnclTask::CnclNestedTask::SnclNest* CurrentNest=Task.TaskBest->NestFirst;
+    CnclTask::CnclNestedTask::SnclNest* CurrentNest=Nest;
     DrawDetail(&CurrentNest->Sheet,sheet_pen,sheet_brush,&UnclosedPath,true);
     while(CurrentNest)
     {
@@ -136,26 +158,10 @@ void GraphicsView::Load(QString file_name)
     gp_item->setPen(pen);
     scene->addItem(gp_item);
     resizeEvent(0);
-    Task.TaskBest->Calc();
     sb->SetText(0,QDir::toNativeSeparators(file_name));
-    if(Task.TaskBest->NestFactor>0)
-        sb->SetText(1,QString("K=%1\%").arg(QLocale(QLocale::Russian).toString(Task.TaskBest->NestFactor*100,'f',2)));
+    if(nest_factor>0)
+        sb->SetText(1,QString("K=%1\%").arg(QLocale(QLocale::Russian).toString(nest_factor*100,'f',2)));
     sb->SetText(2,QString("%1x%2").arg(QLocale(QLocale::Russian).toString(rect.Width(),'f',0),QLocale(QLocale::Russian).toString(rect.Height(),'f',0)));
     sb->SetText(3,QString("S=%1").arg(QLocale(QLocale::Russian).toString(square,'f',0)));
-    sb->SetText(4,QString("P=%1").arg(QLocale(QLocale::Russian).toString(perimeter,'f',0)));
-}
-
-void GraphicsView::clear()
-{
-    scene->clear();
-    sb->Clear();
-}
-
-void GraphicsView::resizeEvent(QResizeEvent *event)
-{
-    QRectF BoundingRect=scene->itemsBoundingRect();
-    scene->setSceneRect(BoundingRect);
-    fitInView(BoundingRect, Qt::KeepAspectRatio);
-    QGraphicsView::resizeEvent(event);
-}
+    sb->SetText(4,QString("P=%1").arg(QLocale(QLocale::Russian).toString(perimeter,'f',0)));}
 

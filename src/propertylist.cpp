@@ -1,5 +1,6 @@
 #include "propertylist.h"
 #include "tableitemdelegate.h"
+#include "ncl/ImportExport/dbs/define.h"
 #include <QDebug>
 
 PropertyList::PropertyList()
@@ -74,12 +75,27 @@ void PropertyList::SetValue(QString key, QVariant value, QString description)
         tp.name=key;
         tp.value=value;
         tp.decription=description;
-        if(key=="fileName" && description.isEmpty())
+        if(key=="fileName")
+        {
             tp.decription="Имя файла";
-        if(key=="itemType" && description.isEmpty())
+            tp.type="string";
+        }
+        if(key=="itemType")
+        {
             tp.decription="Тип";
-        if(key=="count" && description.isEmpty())
+            tp.type="int";
+            QMap<QString,QVariant> value_sheet;
+            value_sheet["Лист"]=DetailType::typeSheet;
+            tp.value_list.append(value_sheet);
+            QMap<QString,QVariant> value_detail;
+            value_detail["Деталь"]=DetailType::typeDetail;
+            tp.value_list.append(value_detail);
+        }
+        if(key=="count")
+        {
             tp.decription="Количество";
+            tp.type="int";
+        }
         if(value.type()==QVariant::Int)
             tp.type="int";
         if(value.type()==QVariant::Double)

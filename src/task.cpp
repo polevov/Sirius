@@ -27,7 +27,7 @@ void Task::Add(PropertyList properties)
 }
 
 void Task::Add(QString FileName, int itemType)
-{
+{    
     PropertyList properties;
     properties.SetValue("fileName",FileName,"Имя файла");
     properties.SetValue("itemType",itemType,"Тип");
@@ -104,23 +104,6 @@ void Task::Load(QString FileName)
                 foreach (QXmlStreamAttribute at, sa)
                 {
                     propertys.SetValue(at.name().toString(),at.value().toString());
-                    if(at.name()=="fileName")
-                    {
-                        propertys.Items.last().type="string";
-                        propertys.Items.last().readOnly=true;
-                    }
-                    if(at.name()=="itemType")
-                    {
-                        propertys.Items.last().type="int";
-                        QMap<QString,QVariant> value_sheet;
-                        value_sheet["Лист"]=DetailType::typeSheet;
-                        propertys.Items.last().value_list.append(value_sheet);
-                        QMap<QString,QVariant> value_detail;
-                        value_detail["Деталь"]=DetailType::typeDetail;
-                        propertys.Items.last().value_list.append(value_detail);
-                    }
-                    if(at.name()=="count")
-                        propertys.Items.last().type="int";
                 }
                 propertys.Items.move(propertys.indexOf("fileName"),0);
                 propertys.Items.move(propertys.indexOf("itemType"),1);
