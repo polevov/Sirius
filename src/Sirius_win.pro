@@ -5,8 +5,6 @@
 #-------------------------------------------------
 QT       += core gui sql
 
-CONFIG -=debug_and_release debug_and_release_target
-
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets qml
 
 TARGET = Sirius
