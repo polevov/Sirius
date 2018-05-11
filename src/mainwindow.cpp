@@ -19,6 +19,10 @@ MainWindow::MainWindow(QSplashScreen* SplashScreen, QWidget *parent) :
     ui(new Ui::MainWindow)
 {
 
+    currentDetailDir=settings->value("Settings/dir_detail").toString();
+    currentSheetDir=settings->value("Settings/dir_sheet").toString();
+    currentTaskDir=settings->value("Settings/dir_project").toString();
+
     currentTask=new Task(this);
     thread=new QThread;
 
@@ -28,6 +32,7 @@ MainWindow::MainWindow(QSplashScreen* SplashScreen, QWidget *parent) :
     ui->ParamsButton->setVisible(false);
     taskSB=new StatusBar(ui->TaskStatusBarFrame);
     connect(ui->newTask_btn,SIGNAL(clicked()),this,SLOT(on_actionNewTask_triggered()));
+    connect(ui->openTask_btn,SIGNAL(clicked()),this,SLOT(on_actionOpen_triggered()));
 
     GViewTask=new GraphicsView(taskSB,this);
     QBoxLayout *sl=new QBoxLayout(QBoxLayout::Down,ui->GPageTask);
@@ -98,6 +103,7 @@ MainWindow::MainWindow(QSplashScreen* SplashScreen, QWidget *parent) :
     if(SplashScreen)
         SplashScreen->showMessage("загрузка меню ...",Qt::AlignBottom|Qt::AlignLeft,Qt::white);
     LoadMenu();
+    ui->nestPreview_btn->setChecked(settings->value("Settings/nestPreview").toBool());
 }
 
 
@@ -163,16 +169,7 @@ void MainWindow::rowChangedSlotDirs(QModelIndex index, QModelIndex)
         QStringList files=dir.entryList(QStringList()<<"*.sirius",QDir::Files|QDir::NoSymLinks);
         if(files.count()>0)
         {
-            currentTask->Load(dir.absoluteFilePath(files[0]));
-            setWindowTitle(currentTask->TaskName);
-            ui->Task->clear();
-            foreach (TaskItem ti, currentTask->Items)
-            {
-                AddNewItem(ti.properties["fileName"].value.toString(),ti.properties["count"].value.toInt(),ti.properties["itemType"].value.toInt());
-            }
-            ui->ResultTree->setProperty("LastFile","");
-            LoadResult();
-            GViewTask->Load(currentTask->TaskJobDir+"/"+ui->ResultTree->property("LastFile").toString());
+            LoadTask(dir.absoluteFilePath(files[0]));
         }
     }
 }
@@ -439,38 +436,59 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     emit resize();
 }
 
-void MainWindow::on_task_btn_toggled(bool)
+void MainWindow::on_task_btn_toggled(bool checked)
 {
-    QString path=settings->value("Settings/dir_project").toString();
-    QDir dir;
-    dir.mkpath(path);
-    ui->DirsView->setCurrentIndex(fsm_dirs->index(path));
-    ui->FilesView->hide();
-    SwitchDir();
+    if(checked)
+    {
+        QString path=currentTaskDir;//settings->value("Settings/dir_project").toString();
+        QDir dir;
+        dir.mkpath(path);
+        ui->DirsView->setCurrentIndex(fsm_dirs->index(path));
+        ui->FilesView->hide();
+        SwitchDir();
+    }
+    else
+    {
+        currentTaskDir=fsm_dirs->fileInfo(ui->DirsView->currentIndex()).absoluteFilePath();
+    }
 }
 
-void MainWindow::on_sheet_btn_toggled(bool)
+void MainWindow::on_sheet_btn_toggled(bool checked)
 {
-    QString path=settings->value("Settings/dir_sheet").toString();
-    QDir dir;
-    dir.mkpath(path);
-    fsm_files->SetDrawsIcon(QIcon(":/icons/sheet.png"));
-    ui->DirsView->setCurrentIndex(fsm_dirs->index(path));
-    ui->FilesView->show();
-    ui->FilesView->repaint();
-    SwitchDir();
+    if(checked)
+    {
+        QString path=currentSheetDir;//settings->value("Settings/dir_sheet").toString();
+        QDir dir;
+        dir.mkpath(path);
+        fsm_files->SetDrawsIcon(QIcon(":/icons/sheet.png"));
+        ui->DirsView->setCurrentIndex(fsm_dirs->index(path));
+        ui->FilesView->show();
+        ui->FilesView->repaint();
+        SwitchDir();
+    }
+    else
+    {
+        currentSheetDir=fsm_dirs->fileInfo(ui->DirsView->currentIndex()).absoluteFilePath();
+    }
 }
 
-void MainWindow::on_detail_btn_toggled(bool)
+void MainWindow::on_detail_btn_toggled(bool checked)
 {
-    QString path=settings->value("Settings/dir_detail").toString();
-    QDir dir;
-    dir.mkpath(path);
-    fsm_files->SetDrawsIcon(QIcon(":/icons/detail.png"));
-    ui->DirsView->setCurrentIndex(fsm_dirs->index(path));
-    ui->FilesView->show();
-    ui->FilesView->repaint();
-    SwitchDir();
+    if(checked)
+    {
+        QString path=currentDetailDir;//settings->value("Settings/dir_detail").toString();
+        QDir dir;
+        dir.mkpath(path);
+        fsm_files->SetDrawsIcon(QIcon(":/icons/detail.png"));
+        ui->DirsView->setCurrentIndex(fsm_dirs->index(path));
+        ui->FilesView->show();
+        ui->FilesView->repaint();
+        SwitchDir();
+    }
+    else
+    {
+        currentDetailDir=fsm_dirs->fileInfo(ui->DirsView->currentIndex()).absoluteFilePath();
+    }
 }
 
 void MainWindow::menu_execute()
@@ -680,10 +698,16 @@ void MainWindow::on_Task_currentItemChanged(QTreeWidgetItem *current, QTreeWidge
         }
         else
         {
-            needNest=currentTask->Items[index].properties["itemType"].value==DetailType::typeSheet;
+            int listSize=currentTask->Items.size();
+            int currentIndex=index;
+            while(currentIndex<listSize && !needNest)
+            {
+                needNest=currentTask->Items[currentIndex].properties["itemType"].value==DetailType::typeDetail;
+                currentIndex++;
+            }
         }
         QString fileName=currentTask->TaskDrawDir+"/"+ui->Task->currentItem()->text(0);
-        if(needNest)
+        if(needNest && settings->value("Settings/nestPreview").toBool())
         {
 
             CnclTask nclTask;
@@ -839,4 +863,37 @@ void MainWindow::script_finish()
     {
         show();
     }
+}
+
+void MainWindow::on_actionOpen_triggered()
+{
+    QFileDialog dialog(this);
+    dialog.setNameFilter("Файлы заданий (*.sirius)");
+    dialog.setFileMode(QFileDialog::ExistingFile);
+    if (dialog.exec())
+    {
+        LoadTask(dialog.selectedFiles().first());
+    }
+}
+
+
+void MainWindow::LoadTask(QString fileName)
+{
+    currentTask->Load(fileName);
+    setWindowTitle(currentTask->TaskName);
+    ui->Task->clear();
+    foreach (TaskItem ti, currentTask->Items)
+    {
+        AddNewItem(ti.properties["fileName"].value.toString(),ti.properties["count"].value.toInt(),ti.properties["itemType"].value.toInt());
+    }
+    ui->ResultTree->setProperty("LastFile","");
+    LoadResult();
+    GViewTask->Load(currentTask->TaskJobDir+"/"+ui->ResultTree->property("LastFile").toString());
+}
+
+
+void MainWindow::on_nestPreview_btn_toggled(bool checked)
+{
+    settings->setValue("Settings/nestPreview",checked);
+    on_Task_currentItemChanged(ui->Task->currentItem(),nullptr);
 }

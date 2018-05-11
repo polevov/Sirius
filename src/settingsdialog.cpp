@@ -51,6 +51,7 @@ QMap<QString, QVariant> SettingsDialog::GetDefaultSettings()
     }
     default_settings["Settings/text_files"]="*.cbs;*.trc;*.tld;*.tld";
     default_settings["Settings/other_files"]="";
+    default_settings["Settings/nestPreview"]=true;
     return default_settings;
 }
 
@@ -62,6 +63,7 @@ void SettingsDialog::DefaultSettings()
     settings->setValue("Settings/dir_detail",default_settings["Settings/dir_detail"]);
     settings->setValue("Settings/text_files",default_settings["Settings/text_files"]);
     settings->setValue("Settings/other_files",default_settings["Settings/other_files"]);
+    settings->setValue("Settings/nestPreview",default_settings["Settings/nestPreview"]);
 }
 
 #define INIT_SETTINGS(key,settings,default_settings) settings->setValue(key,settings->value(key,default_settings.value(key)))
@@ -75,6 +77,7 @@ void SettingsDialog::InitSettings()
 
     INIT_SETTINGS("Settings/text_files",settings,default_settings);
     INIT_SETTINGS("Settings/other_files",settings,default_settings);
+    INIT_SETTINGS("Settings/nestPreview",settings,default_settings);
 }
 
 void SettingsDialog::on_buttonBox_accepted()

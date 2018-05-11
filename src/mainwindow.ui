@@ -523,6 +523,26 @@ QToolButton:checked
                       </widget>
                      </item>
                      <item>
+                      <widget class="QToolButton" name="openTask_btn">
+                       <property name="toolTip">
+                        <string>Открыть задание</string>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                       <property name="icon">
+                        <iconset resource="rc.qrc">
+                         <normaloff>:/icons/task_open.png</normaloff>:/icons/task_open.png</iconset>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>24</width>
+                         <height>24</height>
+                        </size>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
                       <spacer name="horizontalSpacer">
                        <property name="orientation">
                         <enum>Qt::Horizontal</enum>
@@ -822,6 +842,29 @@ QToolButton:checked
                              <width>24</width>
                              <height>24</height>
                             </size>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QToolButton" name="nestPreview_btn">
+                           <property name="toolTip">
+                            <string>Включить/отключить предварительный раскрой</string>
+                           </property>
+                           <property name="text">
+                            <string>...</string>
+                           </property>
+                           <property name="icon">
+                            <iconset resource="rc.qrc">
+                             <normaloff>:/icons/nest.png</normaloff>:/icons/nest.png</iconset>
+                           </property>
+                           <property name="iconSize">
+                            <size>
+                             <width>24</width>
+                             <height>24</height>
+                            </size>
+                           </property>
+                           <property name="checkable">
+                            <bool>true</bool>
                            </property>
                           </widget>
                          </item>
@@ -1212,6 +1255,7 @@ padding-top:-2px;
      <string>Файл</string>
     </property>
     <addaction name="actionNewTask"/>
+    <addaction name="actionOpen"/>
     <addaction name="actionSettings"/>
     <addaction name="actionExit"/>
    </widget>
@@ -1248,6 +1292,14 @@ padding-top:-2px;
    </property>
    <property name="menuRole">
     <enum>QAction::QuitRole</enum>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Открыть ...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
  </widget>

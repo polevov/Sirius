@@ -91,19 +91,22 @@ void PropertyList::SetValue(QString key, QVariant value, QString description)
             value_detail["Деталь"]=DetailType::typeDetail;
             tp.value_list.append(value_detail);
         }
-        if(key=="count")
+        else if(key=="count")
         {
             tp.decription="Количество";
             tp.type="int";
         }
-        if(value.type()==QVariant::Int)
-            tp.type="int";
-        if(value.type()==QVariant::Double)
-            tp.type="double";
-        if(value.type()==QVariant::String)
-            tp.type="string";
-        if(value.type()==QVariant::Bool)
-            tp.type="bool";
+        else
+        {
+            if(value.type()==QVariant::Int)
+                tp.type="int";
+            if(value.type()==QVariant::Double)
+                tp.type="double";
+            if(value.type()==QVariant::String)
+                tp.type="string";
+            if(value.type()==QVariant::Bool)
+                tp.type="bool";
+        }
         Items.append(tp);
     }
 }

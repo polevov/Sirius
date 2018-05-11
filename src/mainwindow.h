@@ -90,6 +90,10 @@ private slots:
     void script_finish();
     void ReloadMenu(QAction*action);
 
+    void on_actionOpen_triggered();
+
+    void on_nestPreview_btn_toggled(bool checked);
+
 private:
     bool eventFilter(QObject *watched, QEvent *event);
     Ui::MainWindow *ui;
@@ -114,6 +118,10 @@ private:
     ExecuteForm *ExecuteDlg;
     void ReloadChildMenu(QMenu *menu);
     QString GetCurrentFileName();
+    void LoadTask(QString fileName);
+    QString currentTaskDir;
+    QString currentDetailDir;
+    QString currentSheetDir;
 protected:
     void resizeEvent(QResizeEvent* event);
  signals:

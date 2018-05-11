@@ -24,5 +24,7 @@
         <file>icons/close.png</file>
         <file>icons/icon.ico</file>
         <file>icons/task_new.png</file>
+        <file>icons/task_open.png</file>
+        <file>icons/nest.png</file>
     </qresource>
 </RCC>
