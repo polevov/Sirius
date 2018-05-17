@@ -23,7 +23,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui->otherFiles->setText(settings->value("Settings/other_files").toString());
     dir_dlg.setFileMode(QFileDialog::Directory);
     dir_dlg.setOption(QFileDialog::ShowDirsOnly);
-    QWidget::setWindowFlag(Qt::WindowContextHelpButtonHint,false);
+    setWindowFlags(windowFlags()&~Qt::WindowContextHelpButtonHint);
     QColor color=QPalette().color(QPalette::Base);
     QString StyleSheet=QString("QFrame{background-color:rgb(%1,%2,%3);};").arg(QString::number(color.red()),QString::number(color.green()),QString::number(color.blue()));
     ui->frameTask->setStyleSheet(StyleSheet);

@@ -182,3 +182,5 @@ DISTFILES += \
     ../appveyor.yml \
     qt.conf \
     history.txt
+
+

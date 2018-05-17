@@ -15,7 +15,7 @@ TaskItemDialog::TaskItemDialog(PropertyList *properties, QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowTitle(QString("Свойства: %1").arg(properties->operator[]("fileName").value.toString()));
-    QWidget::setWindowFlag(Qt::WindowContextHelpButtonHint,false);
+    setWindowFlags(windowFlags()&~Qt::WindowContextHelpButtonHint);
     ui->PropertiesList->header()->setStretchLastSection(false);
     ui->PropertiesList->header()->setSectionResizeMode(0,QHeaderView::Stretch);
     restoreGeometry(settings->value("TaskItemDialog/geometry").toByteArray());

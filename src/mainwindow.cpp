@@ -870,9 +870,11 @@ void MainWindow::on_actionOpen_triggered()
     QFileDialog dialog(this);
     dialog.setNameFilter("Файлы заданий (*.sirius)");
     dialog.setFileMode(QFileDialog::ExistingFile);
+    dialog.setDirectory(currentTaskDir);
     if (dialog.exec())
     {
         LoadTask(dialog.selectedFiles().first());
+        ui->detail_btn->setChecked(true);
     }
 }
 

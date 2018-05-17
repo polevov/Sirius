@@ -112,8 +112,8 @@ void LoadParams(bool LoadDefault=false)
             }
             if(sr.name()=="group")
             {
-                group+=sa.value("name")+"/";
-                group_description+=sa.value("description")+"\n";
+                group+=sa.value("name").toString()+"/";
+                group_description+=sa.value("description").toString()+"\n";
             }
         }
         if (token == QXmlStreamReader::EndElement)

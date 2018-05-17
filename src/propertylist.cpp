@@ -79,6 +79,7 @@ void PropertyList::SetValue(QString key, QVariant value, QString description)
         {
             tp.decription="Имя файла";
             tp.type="string";
+            tp.readOnly=true;
         }
         if(key=="itemType")
         {
