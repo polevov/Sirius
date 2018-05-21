@@ -1,7 +1,10 @@
 version: 3.0.{build}
 environment:
-  QTDIR: C:\Qt\5.10.1\mingw53_32
-  PATH: '%PATH%;%QTDIR%\bin;C:\MinGW\bin'
+  matrix:
+  - QTDIR: C:\Qt\5.6.3\mingw49_32
+    PATH: '%PATH%;%QTDIR%\bin;C:\Qt\Tools\mingw492_32\bin'
+  - QTDIR: C:\Qt\5.10.1\mingw53_32
+    PATH: '%PATH%;%QTDIR%\bin;C:\Qt\Tools\mingw530_32\bin'
 build_script:
   - qmake src\Sirius_win.pro
   - mingw32-make
@@ -11,7 +14,7 @@ after_build:
   - xcopy %QTDIR%\qml\QtQuick.2\qtquick2plugin.dll Sirius\qml\QtQuick.2\
   - xcopy %QTDIR%\qml\QtQuick.2\plugins.qmltypes Sirius\qml\QtQuick.2\
   - xcopy %QTDIR%\qml\QtQuick.2\qmldir Sirius\qml\QtQuick.2\
-  - xcopy %QTDIR%\plugins\styles\qwindowsvistastyle.dll Sirius\plugins\styles\
+  - IF EXIST %QTDIR%\plugins\styles\qwindowsvistastyle.dll xcopy %QTDIR%\plugins\styles\qwindowsvistastyle.dll Sirius\plugins\styles\
   - xcopy %QTDIR%\plugins\platforms\qwindows.dll Sirius\plugins\platforms\
   - xcopy %QTDIR%\bin\Qt5Core.dll Sirius\
   - xcopy %QTDIR%\bin\Qt5Quick.dll Sirius\
