@@ -70,8 +70,7 @@ void GraphicsView::DrawDetail(CnclDetail *CurrentDet, QPen pen, QBrush brush, QP
 
 void GraphicsView::Load(QString file_name)
 {
-    sb->Clear();
-    scene->clear();
+    clear();
 
     CnclTask Task;
     Task.Load((WCHAR*)QDir::toNativeSeparators(file_name).utf16(),&DrawTransform,FALSE);
@@ -98,7 +97,8 @@ void GraphicsView::Load(QString file_name)
 void GraphicsView::clear()
 {
     scene->clear();
-    sb->Clear();
+    if(sb)
+        sb->Clear();
 }
 
 void GraphicsView::resizeEvent(QResizeEvent *event)
@@ -158,10 +158,14 @@ void GraphicsView::DrawNest(CnclTask::CnclNestedTask::SnclNest *Nest,QString fil
     gp_item->setPen(pen);
     scene->addItem(gp_item);
     resizeEvent(0);
-    sb->SetText(0,QDir::toNativeSeparators(file_name));
-    if(nest_factor>0)
-        sb->SetText(1,QString("K=%1\%").arg(QLocale(QLocale::Russian).toString(nest_factor*100,'f',2)));
-    sb->SetText(2,QString("%1x%2").arg(QLocale(QLocale::Russian).toString(rect.Width(),'f',0),QLocale(QLocale::Russian).toString(rect.Height(),'f',0)));
-    sb->SetText(3,QString("S=%1").arg(QLocale(QLocale::Russian).toString(square,'f',0)));
-    sb->SetText(4,QString("P=%1").arg(QLocale(QLocale::Russian).toString(perimeter,'f',0)));}
+    if(sb)
+    {
+        sb->SetText(0,QDir::toNativeSeparators(file_name));
+        if(nest_factor>0)
+            sb->SetText(1,QString("K=%1\%").arg(QLocale(QLocale::Russian).toString(nest_factor*100,'f',2)));
+        sb->SetText(2,QString("%1x%2").arg(QLocale(QLocale::Russian).toString(rect.Width(),'f',0),QLocale(QLocale::Russian).toString(rect.Height(),'f',0)));
+        sb->SetText(3,QString("S=%1").arg(QLocale(QLocale::Russian).toString(square,'f',0)));
+        sb->SetText(4,QString("P=%1").arg(QLocale(QLocale::Russian).toString(perimeter,'f',0)));
+    }
+}
 

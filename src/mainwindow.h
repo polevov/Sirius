@@ -94,6 +94,9 @@ private slots:
 
     void on_nestPreview_btn_toggled(bool checked);
 
+
+    void on_toolButton_clicked();
+
 private:
     bool eventFilter(QObject *watched, QEvent *event);
     Ui::MainWindow *ui;

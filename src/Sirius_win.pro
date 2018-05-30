@@ -35,7 +35,8 @@ FORMS += \
     settingsdialog.ui \
     taskitemdialog.ui \
     menudialog.ui \
-    executeform.ui
+    executeform.ui \
+    createdetail.ui
 
 HEADERS += \
     mainwindow.h \
@@ -93,7 +94,8 @@ HEADERS += \
     propertylist.h \
     highlighter.h \
     menudialog.h \
-    executeform.h
+    executeform.h \
+    createdetail.h
 
 SOURCES += \
     main.cpp \
@@ -149,7 +151,8 @@ SOURCES += \
     propertylist.cpp \
     highlighter.cpp \
     menudialog.cpp \
-    executeform.cpp
+    executeform.cpp \
+    createdetail.cpp
 
 RESOURCES += \
     rc.qrc
@@ -181,6 +184,7 @@ DISTFILES += \
     config/scripts/wwwdb.js \
     ../appveyor.yml \
     qt.conf \
-    history.txt
+    history.txt \
+    config/details/circle.js
 
 

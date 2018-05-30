@@ -12,6 +12,8 @@
 #include "statusbar.h"
 #include "taskitemdialog.h"
 #include "ncl/ImportExport/nclDBS.h"
+#include "createdetail.h"
+
 extern CnclTransformView DrawTransform;
 
 MainWindow::MainWindow(QSplashScreen* SplashScreen, QWidget *parent) :
@@ -398,11 +400,38 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 {
     if(event->type()==QEvent::KeyPress)
     {
-        if(watched==ui->FilesView)
+        QKeyEvent *key=static_cast<QKeyEvent *>(event);
+        if(key->key()==Qt::Key_Return)
         {
-            QKeyEvent *key=static_cast<QKeyEvent *>(event);
-            if(key->key()==Qt::Key_Return)
+            if(watched==ui->FilesView)
+            {
                 on_FilesView_doubleClicked(ui->FilesView->currentIndex());
+            }
+            else if(watched==ui->Task)
+            {
+                on_PropButton_clicked();
+            }
+        }
+        if(watched==ui->Task && ui->Task->currentItem())
+        {
+            int index=ui->Task->indexOfTopLevelItem(ui->Task->currentItem());
+            if(key->key()==Qt::Key_Plus)
+            {
+                currentTask->Items[index].properties["count"].value=currentTask->Items[index].properties["count"].value.toInt()+1;
+                ui->Task->currentItem()->setText(1,currentTask->Items[index].properties["count"].value.toString());
+                currentTask->Save();
+                return true;
+            }
+            else if(key->key()==Qt::Key_Minus)
+            {
+                if(currentTask->Items[index].properties["count"].value.toInt()>1)
+                {
+                    currentTask->Items[index].properties["count"].value=currentTask->Items[index].properties["count"].value.toInt()-1;
+                    ui->Task->currentItem()->setText(1,currentTask->Items[index].properties["count"].value.toString());
+                    currentTask->Save();
+                }
+                return true;
+            }
         }
     }
     else if(event->type()==QEvent::FocusIn)
@@ -898,4 +927,11 @@ void MainWindow::on_nestPreview_btn_toggled(bool checked)
 {
     settings->setValue("Settings/nestPreview",checked);
     on_Task_currentItemChanged(ui->Task->currentItem(),nullptr);
+}
+
+
+void MainWindow::on_toolButton_clicked()
+{
+    CreateDetail cd(this);
+    cd.exec();
 }

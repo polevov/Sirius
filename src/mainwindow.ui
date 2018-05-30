@@ -843,6 +843,9 @@ QToolButton:checked
                              <height>24</height>
                             </size>
                            </property>
+                           <property name="shortcut">
+                            <string>Return</string>
+                           </property>
                           </widget>
                          </item>
                          <item>
@@ -972,7 +975,7 @@ padding-left: -1px;
                          <string notr="true"/>
                         </property>
                         <property name="currentIndex">
-                         <number>0</number>
+                         <number>1</number>
                         </property>
                         <widget class="QWidget" name="GPageTask"/>
                         <widget class="QWidget" name="TPageTask"/>
